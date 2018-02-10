@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,10 +16,6 @@
 
 
 
-
-  
-  
-  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
 
 
 
@@ -83,13 +79,13 @@
 
 
 
-<meta name="description" content="《重构改善代码设计》  重构 Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  重构原则  何为">
+<meta name="description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
 <meta name="keywords" content="重构,refactor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重构 改善既有的代码设计">
 <meta property="og:url" content="http://yoursite.com/2017/07/13/refactor/index.html">
 <meta property="og:site_name" content="JarkeetTalk">
-<meta property="og:description" content="《重构改善代码设计》  重构 Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  重构原则  何为">
+<meta property="og:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG9.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
@@ -105,10 +101,10 @@
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif">
-<meta property="og:updated_time" content="2018-02-10T10:04:15.185Z">
+<meta property="og:updated_time" content="2018-02-10T11:12:10.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重构 改善既有的代码设计">
-<meta name="twitter:description" content="《重构改善代码设计》  重构 Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  重构原则  何为">
+<meta name="twitter:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
 <meta name="twitter:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 
 
@@ -117,7 +113,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -210,6 +206,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
@@ -239,59 +245,11 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
 
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
 
-  
-    <div class="site-search">
-      
-  
-  <div class="algolia-popup popup search-popup">
-    <div class="algolia-search">
-      <div class="algolia-search-input-icon">
-        <i class="fa fa-search"></i>
-      </div>
-      <div class="algolia-search-input" id="algolia-search-input"></div>
-    </div>
-
-    <div class="algolia-results">
-      <div id="algolia-stats"></div>
-      <div id="algolia-hits"></div>
-      <div id="algolia-pagination" class="algolia-pagination"></div>
-    </div>
-
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-  </div>
-
-
-
-
-    </div>
   
 </nav>
 
@@ -403,21 +361,27 @@
     
     
     
-    <div class="post-body han-init-context" itemprop="articleBody">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         <blockquote>
-<p>《重构改善代码设计》</p>
+<p>《重构改善既有代码设计》</p>
 </blockquote>
 <h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ol>
-<li>Extract Method (提炼函数)</li>
-<li>Move Method (搬移函数）</li>
-<li>Self Encapsulate Field (自封装字段)</li>
-<li>Replace Type Code With State/Strategy (以状态／策略模式取代状态码)</li>
-<li>Replace Condition with Polymorphism (以多态取代条件表达式)</li>
+<li><p>Extract Method (提炼函数)</p>
+</li>
+<li><p>Move Method (搬移函数）</p>
+</li>
+<li><p>Self Encapsulate Field (自封装字段)</p>
+</li>
+<li><p>Replace Type Code With State/Strategy (以状态／策略模式取代状态码)</p>
+</li>
+<li><p>Replace Condition with Polymorphism (以多态取代条件表达式)</p>
+<a id="more"></a>
+</li>
 </ol>
 <h3 id="重构原则"><a href="#重构原则" class="headerlink" title="重构原则"></a>重构原则</h3><hr>
 <ul>
@@ -432,7 +396,8 @@
 <li>重构的难题 </li>
 <li>数据库迁移、修改已公布的接口、难以重构的复杂设计</li>
 </ul>
-<h3 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="代码的坏味道"></a>代码的坏味道</h3><hr>
+<p>###代码的坏味道</p>
+<hr>
 <ul>
 <li>Duplicated code（重复代码）</li>
 <li>Long Method（过长函数）</li>
@@ -457,7 +422,8 @@
 <li>Refused Bequest（被拒绝的馈赠）子类服用的超类的行为（实现），却不愿支持超类的接口，需重构（这里思考Basesso类的3个abstract方法有这个问题，不愿支持超类的接口）</li>
 <li>Comments（过多注释）</li>
 </ul>
-<h3 id="重新组织函数"><a href="#重新组织函数" class="headerlink" title="重新组织函数"></a>重新组织函数</h3><hr>
+<p>###重新组织函数</p>
+<hr>
 <ol>
 <li><strong>Extract Method（提炼函数）</strong></li>
 </ol>
@@ -521,7 +487,9 @@
 <ul>
 <li>将函数本体替换为新的算法，建议先考虑分解函数再做替换。</li>
 </ul>
-<h2 id="在对象之间搬移特性"><a href="#在对象之间搬移特性" class="headerlink" title="###在对象之间搬移特性"></a>###在对象之间搬移特性</h2><ol>
+<p>###在对象之间搬移特性</p>
+<hr>
+<ol>
 <li><strong>Move Method (搬移函数)</strong></li>
 </ol>
 <ul>
@@ -576,7 +544,9 @@
 <li>场景：你需要为服务类提供<strong><em>一些额外的函数</em></strong>，但是你无法修改这个类</li>
 <li>应对：建立一个新类，包含这些额外的函数，让这个扩展品称为源类的字类（subclass）或包装类（wrapper）；</li>
 </ul>
-<h2 id="重新组织数据"><a href="#重新组织数据" class="headerlink" title="###重新组织数据"></a>###重新组织数据</h2><ol>
+<p>###重新组织数据</p>
+<hr>
+<ol>
 <li><strong>Self Encapsulate Field (自封装字段)</strong></li>
 </ol>
 <ul>
@@ -1007,8 +977,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/05/16/hexo/" rel="next" title="Hexo">
+                <i class="fa fa-chevron-left"></i> Hexo
               </a>
             
           </div>
@@ -1118,7 +1088,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1130,12 +1100,6 @@
 
           
             <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://www.zhihu.com/people/wang-ji-feng-76/activities" target="_blank" title="知乎">
-                      
-                        <i class="fa fa-fw fa-知乎"></i>知乎</a>
-                  </span>
                 
                   <span class="links-of-author-item">
                     <a href="https://github.com/jarkeet" target="_blank" title="GitHub">
@@ -1167,7 +1131,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构原则"><span class="nav-number">1.1.</span> <span class="nav-text">重构原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码的坏味道"><span class="nav-number">1.2.</span> <span class="nav-text">代码的坏味道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新组织函数"><span class="nav-number">1.3.</span> <span class="nav-text">重新组织函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在对象之间搬移特性"><span class="nav-number">2.</span> <span class="nav-text">###在对象之间搬移特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新组织数据"><span class="nav-number">3.</span> <span class="nav-text">###重新组织数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化条件表达式"><span class="nav-number">4.</span> <span class="nav-text">###简化条件表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化函数调用"><span class="nav-number">5.</span> <span class="nav-text">###简化函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概括处理关系"><span class="nav-number">6.</span> <span class="nav-text">###概括处理关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型重构"><span class="nav-number">7.</span> <span class="nav-text">###大型重构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构原则"><span class="nav-number">1.1.</span> <span class="nav-text">重构原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化条件表达式"><span class="nav-number">2.</span> <span class="nav-text">###简化条件表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化函数调用"><span class="nav-number">3.</span> <span class="nav-text">###简化函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概括处理关系"><span class="nav-number">4.</span> <span class="nav-text">###概括处理关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型重构"><span class="nav-number">5.</span> <span class="nav-text">###大型重构</span></a></li></ol></div>
             
 
           </div>
@@ -1205,7 +1169,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -1305,6 +1269,13 @@
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
@@ -1354,19 +1325,6 @@
   
 
 
-
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
-
-  
-  
-  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
-  
-
-  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
 
 
 
