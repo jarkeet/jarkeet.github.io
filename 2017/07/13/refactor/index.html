@@ -84,7 +84,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="重构 改善既有的代码设计">
 <meta property="og:url" content="http://yoursite.com/2017/07/13/refactor/index.html">
-<meta property="og:site_name" content="jarkeet Blog">
+<meta property="og:site_name" content="Jarkeet&#39;s Blog">
 <meta property="og:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 <meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif">
-<meta property="og:updated_time" content="2018-02-10T11:12:10.021Z">
+<meta property="og:updated_time" content="2018-02-13T02:35:57.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重构 改善既有的代码设计">
 <meta name="twitter:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
@@ -141,7 +141,7 @@
 
 
 
-  <title>重构 改善既有的代码设计 | jarkeet Blog</title>
+  <title>重构 改善既有的代码设计 | Jarkeet's Blog</title>
   
 
 
@@ -171,7 +171,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">jarkeet Blog</span>
+        <span class="site-title">Jarkeet's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -287,7 +287,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="jarkeet Blog">
+      <meta itemprop="name" content="Jarkeet's Blog">
     </span>
 
     
@@ -383,44 +383,79 @@
 <a id="more"></a>
 </li>
 </ol>
-<h3 id="重构原则"><a href="#重构原则" class="headerlink" title="重构原则"></a>重构原则</h3><hr>
+<p>###重构原则</p>
+<hr>
 <ul>
-<li>何为重构 </li>
-<li>对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</li>
-<li>为何重构</li>
-<li>改进软件设计、是软件更容易理解、帮助找到bug、提高编程速度。</li>
-<li>何时重构</li>
-<li>添加功能时重构、修补错误时重构、复审代码时重构</li>
-<li>重构与间接层</li>
-<li>间接层价值： 允许逻辑共享、分开解释意图和实现、隔离变化、封装条件逻辑（多态）</li>
-<li>重构的难题 </li>
-<li>数据库迁移、修改已公布的接口、难以重构的复杂设计</li>
+<li><p>何为重构 </p>
+</li>
+<li><p>对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
+</li>
+<li><p>为何重构</p>
+</li>
+<li><p>改进软件设计、是软件更容易理解、帮助找到bug、提高编程速度。</p>
+</li>
+<li><p>何时重构</p>
+</li>
+<li><p>添加功能时重构、修补错误时重构、复审代码时重构</p>
+</li>
+<li><p>重构与间接层</p>
+</li>
+<li><p>间接层价值： 允许逻辑共享、分开解释意图和实现、隔离变化、封装条件逻辑（多态）</p>
+</li>
+<li><p>重构的难题 </p>
+</li>
+<li><p>数据库迁移、修改已公布的接口、难以重构的复杂设计</p>
+<p>​</p>
+</li>
 </ul>
 <p>###代码的坏味道</p>
 <hr>
 <ul>
-<li>Duplicated code（重复代码）</li>
-<li>Long Method（过长函数）</li>
-<li>Large Class（过大的类）</li>
-<li>Long Parameter List (过长参数列）</li>
-<li>Divergent Change （发散式变化）一种类受多种变化的影响，类过大，需Extract class</li>
-<li>Shotgun Surgery（散弹式修改）一种变化引起多个类修改，需Move Method移到同一个类</li>
-<li>Feature Envy（依恋情结）总是一起变化的东西放在一块</li>
-<li>Data Clumps （数据泥团）多个类中重复的字段、方法。需Extract class到一个独立对象</li>
-<li>Primitive Obsesstion （基本类型偏执）必要时用对象代替基本数据</li>
-<li>Switch Statement（switch语句）需要抽出方法，用子类或state/strategy模式替代</li>
-<li>Parallel Inheritance Hierarchies （平行继承体系）散弹修改的一种，需用引用代替继承</li>
-<li>Lazy Class（冗余类）</li>
-<li>Speculative Generality（夸夸其谈未来性）多余的抽象、委托、参数应该去除</li>
-<li>Temporary Field (迷惑的暂时字段) 可以的话提炼到一个独立的类中</li>
-<li>Message ChainsI（过度耦合的消息链）</li>
-<li>Middle Man（中间人）过度使用委托</li>
-<li>Inappropriate Intimacy (狎昵关系) 拆散过渡亲密的类，Move Method 或 Move Field到合适的地方；提炼共性到新类；Replace Inheritance with Delegation</li>
-<li>Alternative Classes With Different Interfaces (异曲同工的类) 重新命名或提取超类</li>
-<li>Incomplete Library Class (不完美的类库)</li>
-<li>Data Class（存粹的数据类）注意封装和访问权限</li>
-<li>Refused Bequest（被拒绝的馈赠）子类服用的超类的行为（实现），却不愿支持超类的接口，需重构（这里思考Basesso类的3个abstract方法有这个问题，不愿支持超类的接口）</li>
-<li>Comments（过多注释）</li>
+<li><p>Duplicated code（重复代码）</p>
+</li>
+<li><p>Long Method（过长函数）</p>
+</li>
+<li><p>Large Class（过大的类）</p>
+</li>
+<li><p>Long Parameter List (过长参数列）</p>
+</li>
+<li><p>Divergent Change （发散式变化）一种类受多种变化的影响，类过大，需Extract class</p>
+</li>
+<li><p>Shotgun Surgery（散弹式修改）一种变化引起多个类修改，需Move Method移到同一个类</p>
+</li>
+<li><p>Feature Envy（依恋情结）总是一起变化的东西放在一块</p>
+</li>
+<li><p>Data Clumps （数据泥团）多个类中重复的字段、方法。需Extract class到一个独立对象</p>
+</li>
+<li><p>Primitive Obsesstion （基本类型偏执）必要时用对象代替基本数据</p>
+</li>
+<li><p>Switch Statement（switch语句）需要抽出方法，用子类或state/strategy模式替代</p>
+</li>
+<li><p>Parallel Inheritance Hierarchies （平行继承体系）散弹修改的一种，需用引用代替继承</p>
+</li>
+<li><p>Lazy Class（冗余类）</p>
+</li>
+<li><p>Speculative Generality（夸夸其谈未来性）多余的抽象、委托、参数应该去除</p>
+</li>
+<li><p>Temporary Field (迷惑的暂时字段) 可以的话提炼到一个独立的类中</p>
+</li>
+<li><p>Message ChainsI（过度耦合的消息链）</p>
+</li>
+<li><p>Middle Man（中间人）过度使用委托</p>
+</li>
+<li><p>Inappropriate Intimacy (狎昵关系) 拆散过渡亲密的类，Move Method 或 Move Field到合适的地方；提炼共性到新类；Replace Inheritance with Delegation</p>
+</li>
+<li><p>Alternative Classes With Different Interfaces (异曲同工的类) 重新命名或提取超类</p>
+</li>
+<li><p>Incomplete Library Class (不完美的类库)</p>
+</li>
+<li><p>Data Class（存粹的数据类）注意封装和访问权限</p>
+</li>
+<li><p>Refused Bequest（被拒绝的馈赠）子类服用的超类的行为（实现），却不愿支持超类的接口，需重构（这里思考Basesso类的3个abstract方法有这个问题，不愿支持超类的接口）</p>
+</li>
+<li><p>Comments（过多注释）</p>
+<p>​</p>
+</li>
 </ul>
 <p>###重新组织函数</p>
 <hr>
@@ -469,7 +504,7 @@
 <ul>
 <li>代码对参数进行赋值，以一个临时变量取代该参数的位置</li>
 <li><p>Java是按值传递的 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">aMethod</span><span class="params">(Object foo)</span> </span>&#123;	</div><div class="line">		foo.modifySomeWay();   <span class="comment">//that's OK，将改变foo引用的对象 </span></div><div class="line">		foo = anothnerObject;   <span class="comment">//trouble will follow, 函数返回后并不会改变foo。</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">aMethod</span><span class="params">(Object foo)</span> </span>&#123;	</div><div class="line">		foo.modifySomeWay();   <span class="comment">//that's OK，将改变foo引用的对象 </span></div><div class="line">		foo = anothnerObject;   <span class="comment">//trouble will follow, 函数返回后并不会改变foo。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ol>
@@ -485,7 +520,9 @@
 <li><strong>Substitute Algorithm (替换算法)</strong></li>
 </ol>
 <ul>
-<li>将函数本体替换为新的算法，建议先考虑分解函数再做替换。</li>
+<li><p>将函数本体替换为新的算法，建议先考虑分解函数再做替换。</p>
+<p>​</p>
+</li>
 </ul>
 <p>###在对象之间搬移特性</p>
 <hr>
@@ -541,8 +578,11 @@
 <li><strong>Introduce Local Extension (引入本地扩展)</strong></li>
 </ol>
 <ul>
-<li>场景：你需要为服务类提供<strong><em>一些额外的函数</em></strong>，但是你无法修改这个类</li>
-<li>应对：建立一个新类，包含这些额外的函数，让这个扩展品称为源类的字类（subclass）或包装类（wrapper）；</li>
+<li><p>场景：你需要为服务类提供<strong><em>一些额外的函数</em></strong>，但是你无法修改这个类</p>
+</li>
+<li><p>应对：建立一个新类，包含这些额外的函数，让这个扩展品称为源类的字类（subclass）或包装类（wrapper）；</p>
+<p>​</p>
+</li>
 </ul>
 <p>###重新组织数据</p>
 <hr>
@@ -650,13 +690,19 @@
 <li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG15.jpeg?imageMogr2/auto-orient/thumbnail/!75p/blur/1x0/quality/100|imageslim" alt="P227"></li>
 </ul>
 </li>
-<li><strong>Replace Subclass with Fields(以字段代替子类)</strong><ul>
-<li>场景：各个子类的唯一差别只在“返回常量数据”的函数身上</li>
-<li>重构：修改这些函数，使它们返回超类中的某个（新增）字段，然后销毁子类</li>
+<li><p><strong>Replace Subclass with Fields(以字段代替子类)</strong></p>
+<ul>
+<li><p>场景：各个子类的唯一差别只在“返回常量数据”的函数身上</p>
+</li>
+<li><p>重构：修改这些函数，使它们返回超类中的某个（新增）字段，然后销毁子类</p>
+<p>​</p>
+</li>
 </ul>
 </li>
 </ol>
-<h2 id="简化条件表达式"><a href="#简化条件表达式" class="headerlink" title="###简化条件表达式"></a>###简化条件表达式</h2><ol>
+<p>###简化条件表达式</p>
+<hr>
+<ol>
 <li><strong>Decompose Conditional(简化条件表达式)</strong></li>
 </ol>
 <ul>
@@ -833,7 +879,9 @@
 </ul>
 </li>
 </ol>
-<h2 id="概括处理关系"><a href="#概括处理关系" class="headerlink" title="###概括处理关系"></a>###概括处理关系</h2><ol>
+<p>###概括处理关系</p>
+<hr>
+<ol>
 <li><strong>Pull Up Field(字段上移)</strong></li>
 </ol>
 <ul>
@@ -1131,7 +1179,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构原则"><span class="nav-number">1.1.</span> <span class="nav-text">重构原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化条件表达式"><span class="nav-number">2.</span> <span class="nav-text">###简化条件表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化函数调用"><span class="nav-number">3.</span> <span class="nav-text">###简化函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概括处理关系"><span class="nav-number">4.</span> <span class="nav-text">###概括处理关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型重构"><span class="nav-number">5.</span> <span class="nav-text">###大型重构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化函数调用"><span class="nav-number">2.</span> <span class="nav-text">###简化函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型重构"><span class="nav-number">3.</span> <span class="nav-text">###大型重构</span></a></li></ol></div>
             
 
           </div>
