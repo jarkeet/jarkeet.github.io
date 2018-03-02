@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="思考、总结">
+<meta name="description" content="总结、思考、践行">
 <meta name="keywords" content="Hexo, NexT">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Jarkeet&#39;s Blog">
+<meta property="og:title" content="一个写字的地方">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Jarkeet&#39;s Blog">
-<meta property="og:description" content="思考、总结">
+<meta property="og:site_name" content="一个写字的地方">
+<meta property="og:description" content="总结、思考、践行">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jarkeet&#39;s Blog">
-<meta name="twitter:description" content="思考、总结">
+<meta name="twitter:title" content="一个写字的地方">
+<meta name="twitter:description" content="总结、思考、践行">
 
 
 
@@ -124,7 +124,7 @@
 
 
 
-  <title>Jarkeet's Blog</title>
+  <title>一个写字的地方</title>
   
 
 
@@ -155,7 +155,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Jarkeet's Blog</span>
+        <span class="site-title">一个写字的地方</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -305,7 +305,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -392,6 +392,9 @@
 <p><code>ViewRoot</code>对应于<code>ViewRootImpl</code>, 它是连接<code>WindowManager</code>和<code>DecorView</code>的纽带. View的三大流程都是通过<code>ViewRoot</code>来完成的. 当一个<code>Activity</code>对象在<code>ActivityThread</code>被创建后. 会将<code>DecorView</code>添加到<code>Window</code>中, 同时会创建<code>ViewRootImp</code>对象, 并将<code>ViewRootImpl</code>对象和<code>DecorView</code>建立关联.</p>
 <p>View绘制流程是从ViewRoot的<code>PerformTraversals()</code>开始的. 经过三大流程才能将一个View绘制出来.</p>
 <p><code>PerformTraversals()</code>会依次调用<code>performMeasure</code>, <code>performLayout</code>, <code>performDraw</code>. 而前两种内部的调用基本一致,都是先调用<code>measure()/layout()</code>,然后再调用<code>onMeasure()/onLayout()</code>在这个方法中会对所有子元素进行测量和绘制.依次向内部传递. <code>performDraw()</code>有点不同是在<code>draw</code>调用的<code>dispatchDraw()</code>.</p>
+<p><strong>PerformTraversals</strong>绘制流程如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2516256-22e8ab0c969477d1.png" ,="" width="700px"></p>
+<p>​
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/01/View的工作原理/#more" rel="contents">
@@ -454,7 +457,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -606,7 +609,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -764,7 +767,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -915,7 +918,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -1073,7 +1076,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarkeet's Blog">
+      <meta itemprop="name" content="一个写字的地方">
     </span>
 
     
@@ -1239,7 +1242,7 @@
                 alt="jarkeet" />
             
               <p class="site-author-name" itemprop="name">jarkeet</p>
-              <p class="site-description motion-element" itemprop="description">思考、总结</p>
+              <p class="site-description motion-element" itemprop="description">总结、思考、践行</p>
           </div>
 
           <nav class="site-state motion-element">
