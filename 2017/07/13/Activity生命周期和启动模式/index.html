@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Activity的生命周期和启动模式," />
 
 
 
@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="思考、总结">
-<meta name="keywords" content="Hexo, NexT">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jarkeet&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/Rxjava/index.html">
+<meta name="description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
+<meta name="keywords" content="Activity的生命周期和启动模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Activity的生命周期和启动模式">
+<meta property="og:url" content="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/index.html">
 <meta property="og:site_name" content="Jarkeet&#39;s Blog">
-<meta property="og:description" content="思考、总结">
+<meta property="og:description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
+<meta property="og:updated_time" content="2018-03-02T07:53:44.461Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jarkeet&#39;s Blog">
-<meta name="twitter:description" content="思考、总结">
+<meta name="twitter:title" content="Activity的生命周期和启动模式">
+<meta name="twitter:description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
 
 
 
@@ -118,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/Rxjava/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/"/>
 
 
 
 
 
-  <title>分类: Rxjava | Jarkeet's Blog</title>
+  <title>Activity的生命周期和启动模式 | Jarkeet's Blog</title>
   
 
 
@@ -143,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,55 +282,234 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Rxjava<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jarkeet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarkeet's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/02/26/RxJava 源码分析1/" itemprop="url">
-              
-                <span itemprop="name">RxJava 源码分析1</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Activity的生命周期和启动模式</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-02-26T17:19:38+08:00"
-              content="2018-02-26" >
-          02-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T23:44:38+08:00">
+                2017-07-13
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发艺术探索/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发艺术探索</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="生命周期分析"><a href="#生命周期分析" class="headerlink" title="生命周期分析"></a>生命周期分析</h2><h3 id="典型生命周期分析"><a href="#典型生命周期分析" class="headerlink" title="典型生命周期分析"></a>典型生命周期分析</h3><ol>
+<li><p>onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。</p>
+</li>
+<li><p>Activity的启动过程很复杂，涉及<code>Instrumentation</code>、<code>ActivityThread</code>和<code>ActivityManagerService</code>（简称AMS）；简单理解，启动Activity的请求会由Instrumentation来处理，然后它通过<code>Binder</code>向AMS发请求，AMS内部维护一个ActivityStack并负责栈内的Activity的状态同步，AMS通过ActivityThread去同步Activity的状态从而完成生命周期方法的调用。</p>
+</li>
+<li><p>假设当前Activity是A，新启动一个Activity B，那么A的onPause先执行，然后B的onCreate、onStart、onResume，再是A的onStop。 所以Android官方文档中有说明，不能在<code>onPause</code>中作重量级的耗时操作，因为onPause执行完后新的Activity才能Resume。<br><strong><em><code>注：不要在onPause和onStop中执行耗时操作，尤其是onPause。</code></em></strong></p>
+<a id="more"></a>
+</li>
+</ol>
+<h3 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h3><ol>
+<li><p>资源相关的系统配置改变导致Activity被杀死并重新创建</p>
+<blockquote>
+<p>配置改变（旋转）onPause–&gt;onSaveInstanceState–&gt;onStop–&gt;onDestroy<br>–&gt;重建–&gt;onCreate–&gt;onStart–&gt;onRestoreInstanceState</p>
+</blockquote>
+<p><strong>注意：onSaveInstanceState在onStop之前，onRestoreInstanceState在onStart之后</strong></p>
+</li>
+<li><p>资源内存不足导致低优先级的Activity被杀死</p>
+<p>屏幕旋转时候Activity不想重新创建，配置<br><code>android:configChanges=&quot;orientation|screenSize|keyboardHidden&quot;</code></p>
+</li>
+</ol>
+<h3 id="Activity的启动模式（LaunchMode）"><a href="#Activity的启动模式（LaunchMode）" class="headerlink" title="Activity的启动模式（LaunchMode）"></a>Activity的启动模式（LaunchMode）</h3><ol>
+<li><p>standard：标准模式</p>
+<blockquote>
+<p>与启动他的Activity运行在同一个的任务栈中；</p>
+</blockquote>
+</li>
+<li>singleTop：栈顶复用模式</li>
+<li>singleTask：栈内复用模式<blockquote>
+<p>多次启动Activity不会重复创建实例，回调其onNewIntent，并附带ClearTop效果。</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>什么是任务栈？？</p>
+<blockquote>
+<p>与参数TaskAffinity关联，也称为任务相关性，该属性表示任务栈的名字，默认就是packageName，也可以单独指定TaskAffinity的属性；</p>
+</blockquote>
+<p>根据Activity是否位于暂停状态，又可以分为前台任务栈和后台任务栈。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adb shell dumpsys activiy</div></pre></td></tr></table></figure>
+</li>
+<li><p>Activity的Flag</p>
+<p>FLAG_ACTIVITY_NEW_TASK—&gt;”singleTask”</p>
+<p>FLAG_ACTIVITY_SINGLE_TOP—&gt;”singleTop”</p>
+<p>FLAG_ACITIVY_CLEAR_TOP—&gt;一般配合“singleTask”使用，回调onNewIntent</p>
+<p>FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS 移除历史Activity列表</p>
+</li>
+<li><p>IntentFilter的匹配规则</p>
+<ul>
+<li><p>action的匹配规则—&gt;Intent中必须有一个action能够和IntentFilter中的某个action相同</p>
+</li>
+<li><p>categoty的匹配规则—&gt;Intent中可以没有category，但是如果有categoty，则每个category都需要和IntentFilter中的相同。</p>
+<blockquote>
+<p>在startActiviy时，系统默认会为Intent加上<code>android.intent.categoty.DEFAULT</code>这个category，所以IntentFilter中必须有上述category才能接受隐式调用；</p>
+</blockquote>
+</li>
+<li><p>data的匹配规则: mimeType + URI</p>
+<p><strong>URI默认为content和file；如果要为Intent完整指定data，必须调用setDataAndType方法。</strong></p>
+<p><em>判断是否有Activity配置隐式Intent—&gt;可以用PackageManager的<code>resolveActivity</code>方法或者Intent的<code>resolveActivity</code>方法</em></p>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Activity的生命周期和启动模式/" rel="tag"># Activity的生命周期和启动模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/13/refactor/" rel="next" title="重构 改善既有的代码设计">
+                <i class="fa fa-chevron-left"></i> 重构 改善既有的代码设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/22/IPC机制/" rel="prev" title="IPC机制">
+                IPC机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -337,6 +517,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -357,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -432,6 +625,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的生命周期和启动模式"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期和启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期分析"><span class="nav-number">1.1.</span> <span class="nav-text">生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型生命周期分析"><span class="nav-number">1.1.1.</span> <span class="nav-text">典型生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的启动模式（LaunchMode）"><span class="nav-number">1.1.3.</span> <span class="nav-text">Activity的启动模式（LaunchMode）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -572,6 +781,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
