@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Activity的生命周期和启动模式," />
+  <meta name="keywords" content="四大组件UML," />
 
 
 
@@ -79,17 +79,27 @@
 
 
 
-<meta name="description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
-<meta name="keywords" content="Activity的生命周期和启动模式">
+<meta name="description" content="四大组件的工作过程 引用 Android开发艺术探索读书笔记  先说两句，玉刚的书中主要侧重的是过程分析和代码讲解，这样一页一页的翻完之后总有一种意犹未尽却不够清晰的感觉，一开始我依然是用文字list的方式来梳理，后来发现看起来还是有点不够清晰，达不到我想要的效果，所以改了两版后我决定用图 + 文字说明的方式来表现，希望大家可以看得更清晰。注意这里左侧是用UML画的流程图，发现还挺方便的，类中的方">
+<meta name="keywords" content="四大组件UML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Activity的生命周期和启动模式">
-<meta property="og:url" content="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/index.html">
+<meta property="og:title" content="艺术探索读书笔记">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/艺术探索读书笔记/index.html">
 <meta property="og:site_name" content="Writing something">
-<meta property="og:description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
-<meta property="og:updated_time" content="2018-03-02T07:53:44.461Z">
+<meta property="og:description" content="四大组件的工作过程 引用 Android开发艺术探索读书笔记  先说两句，玉刚的书中主要侧重的是过程分析和代码讲解，这样一页一页的翻完之后总有一种意犹未尽却不够清晰的感觉，一开始我依然是用文字list的方式来梳理，后来发现看起来还是有点不够清晰，达不到我想要的效果，所以改了两版后我决定用图 + 文字说明的方式来表现，希望大家可以看得更清晰。注意这里左侧是用UML画的流程图，发现还挺方便的，类中的方">
+<meta property="og:image" content="http://sparkyuan.me/images/Activity_UML.png">
+<meta property="og:image" content="http://sparkyuan.me/images/service_UML.png">
+<meta property="og:image" content="http://sparkyuan.me/images/service_UML2.png">
+<meta property="og:image" content="http://sparkyuan.me/images/Broadcast_UML.png">
+<meta property="og:image" content="http://sparkyuan.me/images/Broadcast_UML2.png">
+<meta property="og:image" content="http://sparkyuan.me/images/qidong.png">
+<meta property="og:image" content="http://sparkyuan.me/images/contentprovider_UML.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20151002100547055">
+<meta property="og:image" content="http://img.blog.csdn.net/20151002101046613">
+<meta property="og:updated_time" content="2018-03-09T03:22:04.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Activity的生命周期和启动模式">
-<meta name="twitter:description" content="Activity的生命周期和启动模式生命周期分析典型生命周期分析 onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。  Activity的启动过程很复杂，涉及Instrumentation、ActivityThread和ActivityManagerService（简称AMS）；简单理解，启">
+<meta name="twitter:title" content="艺术探索读书笔记">
+<meta name="twitter:description" content="四大组件的工作过程 引用 Android开发艺术探索读书笔记  先说两句，玉刚的书中主要侧重的是过程分析和代码讲解，这样一页一页的翻完之后总有一种意犹未尽却不够清晰的感觉，一开始我依然是用文字list的方式来梳理，后来发现看起来还是有点不够清晰，达不到我想要的效果，所以改了两版后我决定用图 + 文字说明的方式来表现，希望大家可以看得更清晰。注意这里左侧是用UML画的流程图，发现还挺方便的，类中的方">
+<meta name="twitter:image" content="http://sparkyuan.me/images/Activity_UML.png">
 
 
 
@@ -119,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/09/艺术探索读书笔记/"/>
 
 
 
 
 
-  <title>Activity的生命周期和启动模式 | Writing something</title>
+  <title>艺术探索读书笔记 | Writing something</title>
   
 
 
@@ -296,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/13/Activity生命周期和启动模式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/艺术探索读书笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jarkeet">
@@ -313,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Activity的生命周期和启动模式</h1>
+          <h1 class="post-title" itemprop="name headline">艺术探索读书笔记</h1>
         
 
         <div class="post-meta">
@@ -325,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T23:44:38+08:00">
-                2017-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T11:30:00+08:00">
+                2018-03-09
               </time>
             
 
@@ -385,68 +395,127 @@
       
 
       
-        <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="生命周期分析"><a href="#生命周期分析" class="headerlink" title="生命周期分析"></a>生命周期分析</h2><h3 id="典型生命周期分析"><a href="#典型生命周期分析" class="headerlink" title="典型生命周期分析"></a>典型生命周期分析</h3><ol>
-<li><p>onStart和onStop是从Activity是否可见的这个角度回调的，而onResume和onPause是从Activity是否位于前台这个角度来回调的。</p>
-</li>
-<li><p>Activity的启动过程很复杂，涉及<code>Instrumentation</code>、<code>ActivityThread</code>和<code>ActivityManagerService</code>（简称AMS）；简单理解，启动Activity的请求会由Instrumentation来处理，然后它通过<code>Binder</code>向AMS发请求，AMS内部维护一个ActivityStack并负责栈内的Activity的状态同步，AMS通过ActivityThread去同步Activity的状态从而完成生命周期方法的调用。</p>
-</li>
-<li><p>假设当前Activity是A，新启动一个Activity B，那么A的onPause先执行，然后B的onCreate、onStart、onResume，再是A的onStop。 所以Android官方文档中有说明，不能在<code>onPause</code>中作重量级的耗时操作，因为onPause执行完后新的Activity才能Resume。<br><strong><em><code>注：不要在onPause和onStop中执行耗时操作，尤其是onPause。</code></em></strong></p>
-<a id="more"></a>
-</li>
-</ol>
-<h3 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h3><ol>
-<li><p>资源相关的系统配置改变导致Activity被杀死并重新创建</p>
-<blockquote>
-<p>配置改变（旋转）onPause–&gt;onSaveInstanceState–&gt;onStop–&gt;onDestroy<br>–&gt;重建–&gt;onCreate–&gt;onStart–&gt;onRestoreInstanceState</p>
+        <h3 id="四大组件的工作过程"><a href="#四大组件的工作过程" class="headerlink" title="四大组件的工作过程"></a>四大组件的工作过程</h3><blockquote>
+<p>引用 <a href="http://blog.csdn.net/amurocrash/article/details/48858353" target="_blank" rel="external">Android开发艺术探索读书笔记</a></p>
 </blockquote>
-<p><strong>注意：onSaveInstanceState在onStop之前，onRestoreInstanceState在onStart之后</strong></p>
+<p>先说两句，玉刚的书中主要侧重的是过程分析和代码讲解，这样一页一页的翻完之后总有一种意犹未尽却不够清晰的感觉，一开始我依然是用文字list的方式来梳理，后来发现看起来还是有点不够清晰，达不到我想要的效果，所以改了两版后我决定用图 + 文字说明的方式来表现，希望大家可以看得更清晰。注意这里左侧是用UML画的流程图，发现还挺方便的，类中的方法是按照调用顺序排列的，右侧的UML图则是真正的UML图，会标注出一些重要类的结构关系，排除各位看书时看到各种A继承B，B继承C时晕了的感觉。</p>
+<h4 id="四大组件概述："><a href="#四大组件概述：" class="headerlink" title="四大组件概述："></a>四大组件概述：</h4><ul>
+<li><p>Activity的主要作用是展示一个界面并和用户交互，它扮演的是一种前台界面的角色。 </p>
 </li>
-<li><p>资源内存不足导致低优先级的Activity被杀死</p>
-<p>屏幕旋转时候Activity不想重新创建，配置<br><code>android:configChanges=&quot;orientation|screenSize|keyboardHidden&quot;</code></p>
+<li><p>Service是一种计算型组件，用于在后台执行一系列计算任务，但因为其本身还是运行在主线程中的，因此耗时的后台计算仍然需要在单独的线程中去完成。 </p>
 </li>
-</ol>
-<h3 id="Activity的启动模式（LaunchMode）"><a href="#Activity的启动模式（LaunchMode）" class="headerlink" title="Activity的启动模式（LaunchMode）"></a>Activity的启动模式（LaunchMode）</h3><ol>
-<li><p>standard：标准模式</p>
-<blockquote>
-<p>与启动他的Activity运行在同一个的任务栈中；</p>
-</blockquote>
+<li><p>BroadcastReceiver是一种消息型组件，用于在不同的组件乃至不同的应用之间传递消息。广播注册有两种方式，动态注册通过Context.registerReceiver()来实现，必须要应用启动才能注册；静态注册则在AndroidManifest文件中进行，应用安装时会被系统解析，不需要启动应用就可接收广播。 </p>
 </li>
-<li>singleTop：栈顶复用模式</li>
-<li>singleTask：栈内复用模式<blockquote>
-<p>多次启动Activity不会重复创建实例，回调其onNewIntent，并附带ClearTop效果。</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li><p>什么是任务栈？？</p>
-<blockquote>
-<p>与参数TaskAffinity关联，也称为任务相关性，该属性表示任务栈的名字，默认就是packageName，也可以单独指定TaskAffinity的属性；</p>
-</blockquote>
-<p>根据Activity是否位于暂停状态，又可以分为前台任务栈和后台任务栈。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adb shell dumpsys activiy</div></pre></td></tr></table></figure>
-</li>
-<li><p>Activity的Flag</p>
-<p>FLAG_ACTIVITY_NEW_TASK—&gt;”singleTask”</p>
-<p>FLAG_ACTIVITY_SINGLE_TOP—&gt;”singleTop”</p>
-<p>FLAG_ACITIVY_CLEAR_TOP—&gt;一般配合“singleTask”使用，回调onNewIntent</p>
-<p>FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS 移除历史Activity列表</p>
-</li>
-<li><p>IntentFilter的匹配规则</p>
-<ul>
-<li><p>action的匹配规则—&gt;Intent中必须有一个action能够和IntentFilter中的某个action相同</p>
-</li>
-<li><p>categoty的匹配规则—&gt;Intent中可以没有category，但是如果有categoty，则每个category都需要和IntentFilter中的相同。</p>
-<blockquote>
-<p>在startActiviy时，系统默认会为Intent加上<code>android.intent.categoty.DEFAULT</code>这个category，所以IntentFilter中必须有上述category才能接受隐式调用；</p>
-</blockquote>
-</li>
-<li><p>data的匹配规则: mimeType + URI</p>
-<p><strong>URI默认为content和file；如果要为Intent完整指定data，必须调用setDataAndType方法。</strong></p>
-<p><em>判断是否有Activity配置隐式Intent—&gt;可以用PackageManager的<code>resolveActivity</code>方法或者Intent的<code>resolveActivity</code>方法</em></p>
+<li><p>ContentProvider是一种共享型组件，用于向其他组件乃至其他应用共享数据。</p>
+<p>​<a id="more"></a></p>
 </li>
 </ul>
+<h3 id="Activity的工作过程"><a href="#Activity的工作过程" class="headerlink" title="Activity的工作过程"></a>Activity的工作过程</h3><p><img src="http://sparkyuan.me/images/Activity_UML.png" ,="" width="600px"></p>
+<p>注😖</p>
+<ul>
+<li><p>启动Activity的真实实现是由ActivityManagerNative.getDefault().startActivity方法来完成的。</p>
+</li>
+<li><p>ActivityManagerService（AMS）继承自ActivityManagerNative，而ActivityManagerNative继承自Binder并实现了IActivityManager这个Binder接口，因此AMS也是一个Binder。</p>
+</li>
+<li><p>AMS这个Binder对象采用单例模式对外提供，第一次调用它的get方法时会通过create方法初始化，后续调用中直接返回之前创建的对象。</p>
+</li>
+<li><p>从makeApplication的实现可以看出，如果Application已经被创建过了，那么就不会再重复创建，这也意味着一个应用只有一个Application对象。Application的创建也是通过Instrumentation来完成的，这个过程和Activity对象的创建过程一样，都是通过类加载器来实现的。</p>
+</li>
+<li><p>ContextImpl是Context的具体实现，ContextImpl是通过Activity的attach方法来和Activity建立关联的，在attach方法中Activity还会完成Window的创建并建立自己和Window的关联，这样当Activity接受到事件就可以传递给window了。</p>
+<p>​</p>
 </li>
 </ul>
+<h3 id="Service的工作过程"><a href="#Service的工作过程" class="headerlink" title="Service的工作过程"></a>Service的工作过程</h3><h4 id="启动过程："><a href="#启动过程：" class="headerlink" title="启动过程："></a>启动过程：</h4><p><img src="http://sparkyuan.me/images/service_UML.png" ,="" width="600px"></p>
+<h4 id="绑定过程"><a href="#绑定过程" class="headerlink" title="绑定过程"></a>绑定过程</h4><p><img src="http://sparkyuan.me/images/service_UML2.png" ,width="600px"><br>注</p>
+<ul>
+<li>Service有两种状态：启动状态和绑定状态，两种状态是可以共存的。</li>
+</ul>
+<h3 id="BroadcastReceiver的工作过程"><a href="#BroadcastReceiver的工作过程" class="headerlink" title="BroadcastReceiver的工作过程"></a>BroadcastReceiver的工作过程</h3><p>BroadcastReceiver的工作过程包括广播注册过程、广播发送和接收过程。</p>
+<h4 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h4><p><img src="http://sparkyuan.me/images/Broadcast_UML.png" alt="动态注册"></p>
+<h4 id="广播发送和接收"><a href="#广播发送和接收" class="headerlink" title="广播发送和接收"></a>广播发送和接收</h4><p><img src="http://sparkyuan.me/images/Broadcast_UML2.png" ,="" width="650px"></p>
+<p>注：</p>
+<ul>
+<li>静态注册是由PackageManagerService（PMS）在应用安装的时候完成整个注册过程的，除广播以外，其他三大组件也都是在应用安装时由PMS解析并注册的。</li>
+<li>广播的发送有几种类型：普通广播、有序广播和粘性广播，有序广播和粘性广播与普通广播相比具有不同的特性，但是发送和接收过程是类似的。</li>
+<li>FLAG_INCLUDE_STOPPED_PACKAGES:广播会发送给已经停止的应用，FLAG_EXCLUDE_STOPPED_PACKAGES广播不会发送给已经停止的应用</li>
+<li>从Android 3.1开始，处于停止状态的应用无法接受到开机广播。</li>
+</ul>
+<h3 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h3><h4 id="启动过程"><a href="#启动过程" class="headerlink" title="启动过程"></a>启动过程</h4><p><img src="http://sparkyuan.me/images/qidong.png" alt="启动过程"></p>
+<ul>
+<li>当ContentProvider所在的进程启动时，会同时被启动并被发布到AMS中，需要注意的是，这个时候它的onCreate要先去Application的onCreate执行，这在四大组件中是一个少有的现象。</li>
+<li>用启动的入口为ActivityThread的main方法，main方法会创建ActivityThread实例并创建主线程消息队列。</li>
+<li>attach方法中远程调用AMS的attachApplication方法，并提供ApplicationThread用于和AMS的通信。</li>
+<li>attachApplication方法会通过bindApplication方法和H来ActivityThread的handleBindApplication，这个方法会先创建Application，再加载ContentProvider，然后才会回调Application的onCreate方法。</li>
+<li>ContentProvider的multiprocess属性决定了ContentProvider是否是单例（false时），一般都用单例。</li>
+<li>ontentResolver的具体类是ApplicationContentResolver，当ContentProvider所在进程未启动时，第一次访问它会触发ContentProvider的创建以及进程启动。</li>
+</ul>
+<h4 id="Query流程"><a href="#Query流程" class="headerlink" title="Query流程"></a>Query流程</h4><p><img src="http://sparkyuan.me/images/contentprovider_UML.png" alt="query"></p>
+<p>insert，delete和update方法类似，这里就不在分析了。</p>
+<h3 id="Android的消息机制"><a href="#Android的消息机制" class="headerlink" title="Android的消息机制"></a>Android的消息机制</h3><ol>
+<li>三大件：Hanlder，MessageQueue，Looper。</li>
+<li>MessageQueue内部的数据结构并非队列，而是单链表，它只是用来存储数据。</li>
+<li>Looper是真正的数据处理者，线程默认没有Looper，使用Handler必须为线程创建Looper，UI线程也就是ActivityThread创建时会初始化Looper，所以主线程中默认可以直接使用Handler。</li>
+<li>UI线程检查当前线程的操作在ViewRootImpl的checkThread方法中，我们常见的不能在子线程中访问view的异常就是在这里抛出的。</li>
+<li>不允许子线程访问主线程的原因是UI控件不是线程安全的，而加锁又会导致UI的操作过于复杂。</li>
+<li>Handler的工作过程，图（page374），我简单概括一下就是：假设创建Handler的线程是A，耗时操作的线程是B，B线程中拿到handler实例发送消息或者post一个Runnable，实际是调用了MessageQueue的enqueueMessage方法，进入了消息队列，线程A中的Looper发现了这个消息，就会处理这个消息，也就是消息中的Runnable或者handler的handleMessage方法会被调用，这样handler中的业务逻辑就被切换到线程A中去了。</li>
+<li>ThreadLocal我用一句大白话来讲解，就是看上去只new了一份，但在每个不同的线程中却可以拥有不同数据副本的神奇类。其本质是ThreadLocal中的Values类维护了一个Object[]，而每个Thread类中有一个ThreadLocal.Values成员，当调用ThreadLocal的set方法时，其实是根据一定规则把这个线程中对应的ThreadLocal值塞进了Values的Object[]数组中的某个index里。这个index总是为ThreadLocal的reference字段所标识的对象的下一个位置。</li>
+<li>MessageQueue的工作原理：主要方法为enqueueMessage和next。<br>a. enqueueMessag主要就是一个单链表的插入操作，<br>b. next方法是一个无限循环，如果消息队列中没有消息，next方法就阻塞，有新消息到来时，next方法会返回这条消息并将其从单链表中删除。</li>
+<li>Looper的工作原理：<br>a. prepare方法，为当前没有Looper的线程创建Looper。<br>b. prepareMainLooper和getMainLooper方法用于创建和获取ActivityThread的Looper。<br>c. quit和quitSafely方法，前者立即退出，后者只是设定一个标记，当消息队列中的所有消息处理完毕后会才安全退出。子线程中创建的Looper建议不需要的时候都要手动终止。<br>d. loop方法，死循环，阻塞获取msg并丢给msg.target.dispatchMessage方法去处理，这里的target就是handler。</li>
+<li>Handler的工作原理：<br>a. 无论sendMessage还是post最终都是调用的sendMessageAtTime方法。<br>b. 发送消息其实就是把一条消息通过MessageQueue的enqueueMessage方法加入消息队列，Looper收到消息就会调用handler的dispatchMessage方法。它的处理过程参考书page388的流程图，一看就懂～<br>c. 这里我补充一个东西，当我们直接Handler h = new Handler()时，本质调用的是Handler(Callback callback, Boolean async)构造方法，这个方法里会调用Looper.myLooper()方法，这个方法其实就是返回的ThreadLocal里保存的当前线程的Looper，这也就解释了为什么我们在主线程中这样new没有问题，子线程中如果不先Looper.prepare会抛出异常的原因，前面多次说了，因为ActivityThread会在初始化的时候创建自己的Looper。</li>
+<li>主线程的消息循环：<br><img src="http://img.blog.csdn.net/20151002100547055" alt="这里写图片描述"></li>
+</ol>
+<h3 id="Window和WindowManager"><a href="#Window和WindowManager" class="headerlink" title="Window和WindowManager"></a>Window和WindowManager</h3><ol>
+<li><p>一些基础知识： </p>
+<ul>
+<li>Window的实现类是PhoneWindow。 </li>
+<li>Window的具体实现位于WindowManagerService中，WindowManager和WindowManagerService的交互是一个IPC过程。 </li>
+<li>Window实际是View的直接管理者。</li>
+</ul>
+</li>
+<li><p>常用的WindowManager.LayoutParams的Flag和Type<br>1） FLAG： </p>
+<ul>
+<li>FLAG_NOT_FOCUSABLE，当前Window不获取焦点，也不接收各种输入事件，会同时启用FLAG_NOT_TOUCH_MODAL，事件会传递给下层具有焦点的Window。 </li>
+<li>FLAG_NOT_TOUCH_MODAL，当前Window区域外的单击事件传递给底层，区域内的单击事件自己处理，一般都需要开启。 </li>
+<li>FLAG_SHOW_WHEN_LOCKED，可以让Window显示在锁屏界面上。 </li>
+</ul>
+<p>2） Type： </p>
+<ul>
+<li>应用Window，一般对应一个Activity。层级范围1～99。 </li>
+<li>子Window，不能单独存在，需要特定的父Window，比如一般的Dialog。层级范围1000～1999。 </li>
+<li>系统Window，需要权限声明，比如Toast。层级范围2000～2999。一般可以选用WindowManager.LayoutParams.TYPE_SYSTEM_ERROR，同时声明权限。 </li>
+</ul>
+<p>3） WindowManager提供的功能：addView，updateViewLayout，removeView</p>
+</li>
+<li><p>Window的内部机制：Window并不实际存在，以View的形式存在。每个Window对应着一个View和ViewRootImpl，Window和View通过ViewRootImpl建立联系。所以在实际使用中其实我们并不能访问到真正的Window，而只能通过WindowManager。<br>1） 几个重要的window类的关系（发现主席不大爱画UML，我就代工了）<br><img src="http://img.blog.csdn.net/20151002101046613" alt="这里写图片描述"><br>2） Window的添加过程 </p>
+<ul>
+<li>WindowManagerGlobal中的addView： </li>
+<li>检查参数是否合法； </li>
+<li>如果子Window还需要调节布局参数； </li>
+<li>创建ViewRootImpl并将View添加到列表中； </li>
+<li>通过ViewRootImpl的setView来更新界面并完成Window的添加过程：requestLayout中的scheduleTraversals是View绘制的入口，最终通过WindowSession来完成Window的添加过程，注意其实这里是个IPC过程，最终会通过WindowManagerService的addWindow方法来实现Window的添加。 </li>
+</ul>
+<p>3） Window的删除过程 </p>
+<ul>
+<li>WinodwManagerGlobal中的removeView； </li>
+<li>findViewLocked来查找待删除待View的索引，再调用removeViewLocked来做进一步删除； </li>
+<li>removeViewLocked通过ViewRootImpl的die方法来完成删除操作，包括同步和异步两种方式，同步方式可能会导致意外的错误，不推荐，一般使用异步的方式，其实就是通过handler发送了一个删除请求，将View添加到mDyingViews中； </li>
+<li>die方法本质调用了doDie方法，真正删除View的逻辑在该方法的dispatchDetachedFromWindow方法中，主要做了四件事：垃圾回收，通过Session的remove方法删除Window，调用View的dispatchDetachedFromWindow方法同时会回调View的onDetachedFromWindow以及onDetachedFromWindowInternal，调用WindowManagerGlobal的doRemoveView刷新数据。 </li>
+</ul>
+<p>4） Window的更新过程<br>WindowManagerGlobal的updateViewLayout；<br>更新View的LayoutParams；<br>更新ViewImple的LayoutParams，实现对View的重新测量，布局，重绘；<br>通过WindowSession更新Window的视图，WindowManagerService.relayoutWindow()。</p>
+</li>
+<li><p>Window的创建过程<br>1） <strong>Activity</strong> </p>
+<ul>
+<li>Activity的attach方法中，系统会创建Activity所属的Window并为其设置回调； </li>
+<li>Window对象的创建通过PolicyManager的makeNewWindow方法； </li>
+<li>Window的具体实现是PhoneWindow类； </li>
+<li>Window创建好之后，通过PhoneWindow的setContentView将Activity与Window进行关联，这个方法大致步骤： </li>
+</ul>
+<p>a. 如果没有DecorView就创建，id是android.R.id.content；<br>b. 将Activity设置的ContentView设置到DecorView的mContentParent中；<br>c. 回调Activity的onContentChanged方法通知Activity视图已经发生改变；<br>d. Activity onResume的时候会调用Activity的makeVisible方法真正完成DecorView的添加和显示。</p>
+</li>
+</ol>
+<p>   2） <strong>Dialog </strong><br>   a. 通过PolicyManager的makeNewWindow方法创建Window；<br>   b. 初始化DecorView，和Activity类似；<br>   c. Dialog的show方法中，通过WindowManager将DecorView添加到Window中；<br>   d. Dialog关闭时，会通过WindowManager来移除DecorView，方法为removeViewImmediate(mDecor)；<br>   e. 想要创建一个使用application context的Dialog可按照本章2-2的方法设置，dialog.getWindow.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR)，记得在manifest中设置权限。 </p>
+<p>   ​</p>
+<p>   3） <strong>Toast</strong><br>   a. Toast内部有两类IPC：Toast访问NotificationManagerService；NotificationManagerService（下文简称NMS）访问Toast的TN接口；<br>   b. Toast属于系统Window，内部视图mNextView一种为系统默认样式，另一种通过setView方法来指定一个自定义View。<br>   c. TN是一个Binder类，NMS处理Toast的显示隐藏请求时会跨进程回调TN中的方法，所以TN运行在Binder线程池中，所以需要handler切换到当前发送Toast请求的线程中，也就是说没有Looper的线程是无法弹出Toast的。<br>   d. Toast的show方法调用了NMS的enqueueToast方法，该方法先将Toast请求封装成ToastRecord并丢入mToastQueue队列中（非系统应用最多塞50个）。<br>   e. NMS通过showNextToastLocked方法来显示当前View，Toast显示由ToastRecord的callback方法中的show方法完成，callback其实就是TN对象的远程Binder，所以最终调用的是TN中的方法，并运行在发起Toast请求应用的Binder线程池中。<br>   f. 显示以后，NMS通过scheduleTimeoutLocked方法发送延时消息，延时后NMS通过cancelToastLocked方法来隐藏Toast并从队列中移除，隐藏依然通过ToastRecord的callback中的hide方法实现。<br>   g. callback回调TN的show和hide方法后，会通过handler发送两个Runnable，里面的handleShow和handleHide方法是真正完成显示和隐藏Toast的地方。handleShow方法中将Toast的视图添加到Window中，handleHide方法将Toast视图从Window中移除。</p>
 
       
     </div>
@@ -464,7 +533,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Activity的生命周期和启动模式/" rel="tag"># Activity的生命周期和启动模式</a>
+            <a href="/tags/四大组件UML/" rel="tag"># 四大组件UML</a>
           
         </div>
       
@@ -477,8 +546,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/hexo/" rel="next" title="Hexo">
-                <i class="fa fa-chevron-left"></i> Hexo
+              <a href="/2018/03/09/四大组件的工作过程/" rel="next" title="四大组件的工作过程">
+                <i class="fa fa-chevron-left"></i> 四大组件的工作过程
               </a>
             
           </div>
@@ -486,10 +555,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/13/refactor/" rel="prev" title="重构 改善既有的代码设计">
-                重构 改善既有的代码设计 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -635,7 +700,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的生命周期和启动模式"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期和启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期分析"><span class="nav-number">1.1.</span> <span class="nav-text">生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型生命周期分析"><span class="nav-number">1.1.1.</span> <span class="nav-text">典型生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的启动模式（LaunchMode）"><span class="nav-number">1.1.3.</span> <span class="nav-text">Activity的启动模式（LaunchMode）</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#四大组件的工作过程"><span class="nav-number">1.</span> <span class="nav-text">四大组件的工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四大组件概述："><span class="nav-number">1.1.</span> <span class="nav-text">四大组件概述：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的工作过程"><span class="nav-number">2.</span> <span class="nav-text">Activity的工作过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service的工作过程"><span class="nav-number">3.</span> <span class="nav-text">Service的工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动过程："><span class="nav-number">3.1.</span> <span class="nav-text">启动过程：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绑定过程"><span class="nav-number">3.2.</span> <span class="nav-text">绑定过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BroadcastReceiver的工作过程"><span class="nav-number">4.</span> <span class="nav-text">BroadcastReceiver的工作过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态注册"><span class="nav-number">4.1.</span> <span class="nav-text">动态注册</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广播发送和接收"><span class="nav-number">4.2.</span> <span class="nav-text">广播发送和接收</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContentProvider"><span class="nav-number">5.</span> <span class="nav-text">ContentProvider</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动过程"><span class="nav-number">5.1.</span> <span class="nav-text">启动过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Query流程"><span class="nav-number">5.2.</span> <span class="nav-text">Query流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android的消息机制"><span class="nav-number">6.</span> <span class="nav-text">Android的消息机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Window和WindowManager"><span class="nav-number">7.</span> <span class="nav-text">Window和WindowManager</span></a></li></ol></div>
             
 
           </div>
