@@ -82,7 +82,7 @@
 <meta name="description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
 <meta name="keywords" content="Bitmap,图片缓存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android的消息机制">
+<meta property="og:title" content="Bitmap的加载和Cache">
 <meta property="og:url" content="http://yoursite.com/2018/03/21/Bitmap的加载和Cache/index.html">
 <meta property="og:site_name" content="Writing something">
 <meta property="og:description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
@@ -90,9 +90,9 @@
 <meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_560dpi.png">
 <meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/lrucache_result.png">
 <meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/photo_wall_result.png">
-<meta property="og:updated_time" content="2018-03-23T03:23:50.975Z">
+<meta property="og:updated_time" content="2018-03-23T07:36:22.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android的消息机制">
+<meta name="twitter:title" content="Bitmap的加载和Cache">
 <meta name="twitter:description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
 <meta name="twitter:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_480dpi.png">
 
@@ -130,7 +130,7 @@
 
 
 
-  <title>Android的消息机制 | Writing something</title>
+  <title>Bitmap的加载和Cache | Writing something</title>
   
 
 
@@ -318,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android的消息机制</h1>
+          <h1 class="post-title" itemprop="name headline">Bitmap的加载和Cache</h1>
         
 
         <div class="post-meta">
