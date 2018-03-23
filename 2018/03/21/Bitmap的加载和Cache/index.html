@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Bitmap,图片缓存," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
+<meta name="keywords" content="Bitmap,图片缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android的消息机制">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/Bitmap的加载和Cache/index.html">
+<meta property="og:site_name" content="Writing something">
+<meta property="og:description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
+<meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_480dpi.png">
+<meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_560dpi.png">
+<meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/lrucache_result.png">
+<meta property="og:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/photo_wall_result.png">
+<meta property="og:updated_time" content="2018-03-23T03:23:50.975Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android的消息机制">
+<meta name="twitter:description" content="Bitmap的高效加载先来简单介绍一下如何加载一个Bitmap, Bitmap在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式. 那么如何加载一个图片?首先BitmapFactory类提供了四种方法: decodeFile(), decodeResource(), decodeStream(), decodeByteArray(). 分别用于从文件系统, 资源">
+<meta name="twitter:image" content="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_480dpi.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'GB10AN7BSS',
+      apiKey: 'd96e100af839e1d1e7116c114785f5b9',
+      indexName: 'algolia_index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/21/Bitmap的加载和Cache/"/>
+
+
+
+
+
+  <title>Android的消息机制 | Writing something</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Writing something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/Bitmap的加载和Cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jarkeet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Writing something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android的消息机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T12:57:00+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android开发艺术探索/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发艺术探索</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Bitmap的高效加载"><a href="#Bitmap的高效加载" class="headerlink" title="Bitmap的高效加载"></a>Bitmap的高效加载</h2><p>先来简单介绍一下如何加载一个<code>Bitmap</code>, <code>Bitmap</code>在android中指的是一张图片, 可以是png格式也可以是jpg等其他常见的图片格式.</p>
+<p><strong>那么如何加载一个图片?</strong>首先<code>BitmapFactory</code>类提供了四种方法: <code>decodeFile()</code>, <code>decodeResource()</code>, <code>decodeStream()</code>, <code>decodeByteArray()</code>. 分别用于从文件系统, 资源文件, 输入流以及字节数组加载出一个<code>Bitmap</code>对象. 其中<code>decodeFile</code>和<code>decodeResource</code>又间接调用了<code>decodeStream()</code>方法, 这四类方法最终是在Android的底层实现的, 对应着<code>BitmapFactory</code>类的几个native方法.</p>
+<a id="more"></a>
+<p><strong>高效加载的Bitmap的核心思想:</strong>采用<code>BitmapFactory.Options</code>来加载所需尺寸的图片. 比如说一个<code>ImageView</code>控件的大小为<code>300*300</code>. 而图片的大小为<code>800*800</code>. 这个时候如果直接加载那么就比较浪费资源, 需要更多的内存空间来加载图片, 这不是很必要的. 这里我们就可以先把图片按一定的采样率来缩小图片在进行加载. 不仅降低了内存占用,还在一定程度上避免了<code>OOM</code>异常. 也提高了加载bitmap时的性能.</p>
+<p><strong>而通过Options参数来缩放图片</strong>: 主要是用到了<code>inSampleSize</code>参数, 即采样率.</p>
+<ul>
+<li>如果是<strong>inSampleSize=1</strong>那么和原图大小一样,</li>
+<li>如果是<strong>inSampleSize=2</strong>那么宽高都为原图<strong>1/2</strong>, 而像素为原图的<strong>1/4</strong>, 占用的内存大小也为原图的<strong>1/4</strong></li>
+<li>如果是<strong>inSampleSize=3</strong>那么宽高都为原图<strong>1/3</strong>, 而像素为原图的<strong>1/9</strong>, 占用的内存大小也为原图的<strong>1/9</strong></li>
+<li>以此类推…..</li>
+</ul>
+<p><strong>要知道Android中加载图片具体在内存中的占有的大小是根据图片的像素决定的, 而与图片的实际占用空间大小没有关系.而且如果要加载mipmap下的图片, 还会根据不同的分辨率下的文件夹进行不同的放大缩小.</strong></p>
+<p>列举现在有一张图片像素为:<strong>1024*1024</strong>, 如果采用<code>ARGB8888</code>(四个颜色通道每个占有一个字节,相当于1点像素占用4个字节的空间)的格式来存储.(这里不考虑不同的资源文件下情况分析) 那么图片的占有大小就是<code>1024*1024*4</code>那现在这张图片在内存中占用<strong>4MB</strong>.</p>
+<p>如果针对刚才的图片进行<code>inSampleSize=2</code>, 那么最后占用内存大小为<code>512*512*4</code>, 也就是<strong>1MB</strong></p>
+<p>采样率的数值必须是大于1的整数是才会有缩放效果, 并且采样率同时作用于宽/高, 这将导致缩放后的图片以这个<strong>采样率的2次方递减, 即内存占用缩放大小为1/(inSampleSize的二次方).</strong> 如果小于1那么相当于=1的时候. 在官方文档中指出, <code>inSampleSize</code>的取值应该总是为2的指数, 比如1,2,4,8,16,32…如果外界传递<code>inSampleSize</code>不为2的指数, 那么系统会向下取整并选择一个最接近的2的指数来代替. 比如如果<code>inSampleSize=3</code>,那么系统会选择2来代替. <strong>但是这条规则并不作用于所有的android版本, 所以可以当成一个开发建议</strong></p>
+<hr>
+<p>整理一下开发中代码流程:</p>
+<ol>
+<li>将<code>BitmapFactory.Options</code>的<code>inJustDecodeBounds</code>参数设置为true并加载图片.</li>
+<li>从<code>BitmapFactory.Options</code>取出图片的原始宽高信息, 他们对应于<code>outWidth</code>和<code>outHeight</code>参数</li>
+<li>根据采样率的规则并结合目标View的所需大小计算出采样率<code>inSampleSize</code></li>
+<li>将<code>BitmapFactory.Options</code>的<code>inJustDecodeBounds</code>参数设为false, 然后重新加载.</li>
+</ol>
+<p>第一个步骤设置了一个参数, 这个参数的作用就是在加载图片的时候是否只是加载图片宽高信息而不把图片全部加载到内存. 所以这个操作是个<strong>轻量级的</strong>.</p>
+<p>通过这些步骤就可以整理出以下的工具加载图片类调用<code>decodeFixedSizeForResource()</code>即可.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBitmapLoadUtil</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 对一个Resources的资源文件进行指定长宽来加载进内存, 并把这个bitmap对象返回</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> res   资源文件对象</div><div class="line">     * <span class="doctag">@param</span> resId 要操作的图片id</div><div class="line">     * <span class="doctag">@param</span> reqWidth 最终想要得到bitmap的宽度</div><div class="line">     * <span class="doctag">@param</span> reqHeight 最终想要得到bitmap的高度</div><div class="line">     * <span class="doctag">@return</span> 返回采样之后的bitmap对象</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeFixedSizeForResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId, <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span></span>&#123;</div><div class="line">        <span class="comment">// 首先先指定加载的模式 为只是获取资源文件的大小</span></div><div class="line">        BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">        options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">        BitmapFactory.decodeResource(res, resId, options);</div><div class="line"></div><div class="line">        <span class="comment">//Calculate Size  计算要设置的采样率 并把值设置到option上</span></div><div class="line">        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</div><div class="line"></div><div class="line">        <span class="comment">// 关闭只加载属性模式, 并重新加载的时候传入自定义的options对象</span></div><div class="line">        options.inJustDecodeBounds = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *  一个计算工具类的方法, 传入图片的属性对象和 想要实现的目标大小. 通过计算得到采样值</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(BitmapFactory.Options options, <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight)</span> </span>&#123;</div><div class="line">        <span class="comment">//Raw height and width of image</span></div><div class="line">        <span class="comment">//原始图片的宽高属性</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</div><div class="line">        <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="comment">// 如果想要实现的宽高比原始图片的宽高小那么就可以计算出采样率, 否则不需要改变采样率</span></div><div class="line">        <span class="keyword">if</span> (reqWidth &lt; height || reqHeight &lt; width)&#123;</div><div class="line">            <span class="keyword">int</span> halfWidth = width/<span class="number">2</span>;</div><div class="line">            <span class="keyword">int</span> halfHeight = height/<span class="number">2</span>;</div><div class="line"></div><div class="line">            <span class="comment">// 判断原始长宽的一半是否比目标大小小, 如果小那么增大采样率2倍, 直到出现修改后原始值会比目标值大的时候</span></div><div class="line">            <span class="keyword">while</span>((halfHeight/inSampleSize) &gt;= reqHeight &amp;&amp; (halfWidth/inSampleSize) &gt;= reqWidth)&#123;</div><div class="line">                inSampleSize *= <span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> inSampleSize;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当给<code>ImageView</code>设置的时候传入控件的大小, 就会自动转换返回. 可以看一下下面的两张图, 当加载一个分辨率很大的图片如果不使用此方法那么就出<strong>程序崩溃</strong></p>
+<p><strong>了解一下一个原始图片到手机显示的最终占用内存大小</strong></p>
+<p><img src="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_480dpi.png" alt="img"></p>
+<p><img src="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/load_oom_560dpi.png" alt="img"></p>
+<h2 id="Android中的缓存策略"><a href="#Android中的缓存策略" class="headerlink" title="Android中的缓存策略"></a>Android中的缓存策略</h2><p>目前常用的一种缓存算法是<strong>LRU(Least Recently Used)</strong>, 最近最少使用算法. 核心思想: 当缓存存满时, 会优先淘汰那些近期最少使用的缓存对象. 采用LRU算法的缓存有两种: <strong>LruCache</strong>和<strong>DiskLruCache</strong>。<strong>LruCache</strong>用于实现内存缓存, <strong>DiskLruCache</strong>则充当了存储设备缓存, 当组合使用后就可以实现一个类似<code>ImageLoader</code>这样的类库.</p>
+<h3 id="LruCache"><a href="#LruCache" class="headerlink" title="LruCache"></a>LruCache</h3><p><strong>LruCache</strong>是Android 3.1所提供的一个缓存类, 通过<code>support-v4</code>兼容包可以兼容到早期的Android版本</p>
+<p><strong>LruCache</strong>是一个泛型类, 它内部采用了一个<code>LinkedHashMap</code>以强引用的方式存储外界的缓存对象, 其提供了get和put方法来完成缓存的获取和添加的操作. 当缓存满了时, <strong>LruCache</strong>会移除较早使用的缓存对象, 然后在添加新的缓存对象. 普及一下各种引用的区别:</p>
+<ul>
+<li>强引用: 直接的对象引用</li>
+<li>软引用: 当一个对象只有软引用存在时, 系统内存不足时此对象会被gc回收</li>
+<li>弱引用: 当一个对象只有弱引用存在时, 对象会随下一次gc时被回收</li>
+</ul>
+<p>创建的缓存对象大小通过可用内存的1/8来进行分配, 并需要重写<code>sizeOf()</code>方法, <code>sizeOf()</code>是计算缓存对象的大小, 如果有需要还可以重写<code>entryRemoved()</code>,在<strong>Lru</strong>移除旧缓存的时候回调用此方法.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> maxMemory = (<span class="keyword">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</div><div class="line"><span class="keyword">int</span> cacheSize = maxMemory / <span class="number">8</span>;</div><div class="line">mMemoryCache = <span class="keyword">new</span> LruCache&lt;String, Bitmap&gt;(cacheSize) &#123;</div><div class="line">    <span class="meta">@override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">sizeof</span><span class="params">(String key, Bitmap bitmap)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> bitmap.getRowBytes() * bitmap.getHeight() / <span class="number">1024</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>获取、添加、 删除一个缓存对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mMemoryCache.get(key);</div><div class="line">mMemoryCache.put(key);</div><div class="line">mMemoryCache.remove(key);</div></pre></td></tr></table></figure>
+<h3 id="DiskLruCache"><a href="#DiskLruCache" class="headerlink" title="DiskLruCache"></a>DiskLruCache</h3><p><strong>DiskLruCache</strong>用于实现存储设备缓存, 即磁盘缓存. 它通过将缓存对象写入文件系统从而实现缓存的效果.</p>
+<p>参考： <a href="http://blog.csdn.net/sinyu890807/article/details/28863651" target="_blank" rel="external">Android DiskLruCache完全解析，硬盘缓存的最佳方案</a></p>
+<p><strong>1. DiskLruCache</strong>的创建</p>
+<p><strong>DiskLruCache</strong>并不能通过构造方法来创建, 他提供了<code>open()</code>方法用于创建自身, 如下所示</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DiskLruCache <span class="title">open</span><span class="params">(File directory, <span class="keyword">int</span> appVersion, <span class="keyword">int</span> valueCount, <span class="keyword">long</span> maxSize)</span></span></div></pre></td></tr></table></figure>
+<p>这个方法有四个参数:</p>
+<ol>
+<li><code>File directory</code>: 表示磁盘缓存在文件系统中的存储路径. 可以选择SD卡上的缓存目录, 具体是指<code>/sdcard/Andriod/data/package_name/cache</code>目录, package_name表示当前应用的包名, 当应用被卸载后, 此目录会一并删除掉. 也可以选择data目录下. 或者其他地方. <strong>这里给出的建议:</strong>如果应用卸载后就希望删除缓存文件的话 , 那么就选择SD卡上的缓存目录, 如果希望保留缓存数据那就应该选择SD卡上的其他目录.</li>
+<li><code>int appVersion</code>: 表示应用的版本号, 一般设为1即可. 当版本号发生改变的时候<code>DiskLruCache</code>会清空之前所有的缓存文件, 在实际开发中这个实用性不大.</li>
+<li><code>int valueCount</code>: 表示单个节点所对应的数据的个数, 一般设为1.</li>
+<li><code>long maxSize</code>: 表示缓存的总大小, 比如50MB, 当缓存大小超出这个设定值后, <code>DiskLruCache</code>会清除一些缓存而保证总大小不大于这个设定值.</li>
+</ol>
+<p><strong>2. DiskLruCache的缓存添加</strong></p>
+<p><code>DiskLruCache</code>的缓存添加的操作是通过<code>Editor</code>完成的, <strong><code>Editor</code>表示一个缓存对象的编辑对象</strong>.</p>
+<p>如果还是缓存图片为例子, 每一张图片都通过图片的<code>url</code>为key, 这里由于url可能会有特殊字符所以采用<strong>url的md5值</strong>作为key. 根据这个key就可以通过<code>edit()</code>来获取<code>Editor</code>对象, 如果这个缓存对象正在被编辑, 那么edit()就会返回null. 即<code>DiskLruCache</code>不允许同时编辑一个缓存对象.</p>
+<p>当用<code>.edit(key)</code>获得了<code>Editor</code>对象之后. 通过<code>editor.newOutputStream(0)</code>就可以得到一个文件输出流. 由于之前<code>open()</code>方法设置了一个节点只能有一个数据. 所以在获得输出流的时候传入常量0即可.</p>
+<p>有了文件输出流, 可以当网络下载图片时, 图片就可以通过这个文件输出流写入到文件系统上. 别忘了使用<code>Bufferedxxxxx</code>写完之后, <strong>要通过<code>Editor中commit()</code>来提交写操作, 如果下载中发生异常, 那么使用<code>Editor中abort()</code>来回退整个操作</strong>.</p>
+<p><strong>3. DiskLruCache的缓存查找</strong></p>
+<p>和缓存的添加过程类似, 缓存查找过程也需要将url转换成key, 然后通<strong>过<code>DiskLruCache#get()</code>方法可以得到一个<code>Snapshot</code>对象, 接着在通过<code>Snapshot</code>对象即可得到缓存的文件输入流,</strong> 有了文件输入流, 自然就可以得到<code>Bitmap</code>对象. 为了避免加载图片出现OOM所以采用压缩的方式. 在前面对<code>BitmapFactory.Options</code>的使用说明了. <strong>但是这中方法对FileInputStream的缩放存在问题</strong>. 原因是<code>FileInputStream</code>是一种有序的文件流, 而两次<code>decodeStream</code>调用会影响文件的位置属性, 这样在第二次<code>decodeStream</code>的时候得到的会是null. 针对这一个问题, 可以通过文件流来得到它所对应的<strong>文件描述符</strong>, 然后通过<code>BitmapFactory.decodeFileDescription()</code>来加载一张缩放后的图片.</p>
+<h3 id="ImageLoader的实现"><a href="#ImageLoader的实现" class="headerlink" title="ImageLoader的实现"></a>ImageLoader的实现</h3><p>一个好的ImageLoader应该具备以下几点:</p>
+<ul>
+<li>图片的压缩</li>
+<li>网络拉取</li>
+<li>内存缓存</li>
+<li>磁盘缓存</li>
+<li>图片的同步加载</li>
+<li>图片的异步加载</li>
+</ul>
+<p>也可以利用<code>picasso</code>和<code>glide</code>这种图片加载类库, 使用<strong>构建者</strong>模式提供使用. 本文练习demo实现了链式调用设置控件,并制定url然后自动去获取. 相关联的类在<code>load包中</code></p>
+<p>可以看看有了缓存的区别</p>
+<p><img src="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/lrucache_result.png" alt="img"></p>
+<h2 id="ImageLoader的使用"><a href="#ImageLoader的使用" class="headerlink" title="ImageLoader的使用"></a>ImageLoader的使用</h2><h3 id="照片墙效果"><a href="#照片墙效果" class="headerlink" title="照片墙效果"></a>照片墙效果</h3><p>这里定义一个自定义的<code>ImageView</code>作为GridView的item布局控件, 之所以这样是想让图片的控件自动去使用设备达到<strong>宽高相等的效果比较好看些</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SquareImageView</span> <span class="keyword">extends</span> <span class="title">ImageView</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SquareImageView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SquareImageView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SquareImageView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">        <span class="comment">// 由于这里准备提供给GridView控件使用, 对于一个水平线有几个是未知的</span></div><div class="line">        <span class="comment">// 那么通过父控件的测量传到这里的宽度规格, 也当做高度即可</span></div><div class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, widthMeasureSpec);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个实现很简单, 利用动态的宽度同时也当做高度即可实现预期的效果.</p>
+<p><img src="http://szysky.com/2016/08/23/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-12-Bitmap%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8CCache/photo_wall_result.png" alt="img"></p>
+<p>这个就是结果, 或许应该对网络加上判断非wifi给一个提示, 可能首次加载会需要比较多的流量.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// 根据连接网络的情况判断是否加载图片</span></div><div class="line"><span class="keyword">if</span> (!NetWorkUtil.isWifi(getApplicationContext())) &#123;</div><div class="line">  AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(<span class="keyword">this</span>);</div><div class="line">  builder.setMessage(<span class="string">"首次使用会从手机网络下载图片, 是否确认下载?"</span>)</div><div class="line">          .setTitle(<span class="string">"友情提示"</span>)</div><div class="line">          .setPositiveButton(<span class="string">"好的."</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">              <span class="meta">@Override</span></div><div class="line">              <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                  mCanLoadForPhoneNet = <span class="keyword">true</span>;</div><div class="line">                  imageAdapter.notifyDataSetChanged();</div><div class="line">              &#125;</div><div class="line">          &#125;)</div><div class="line">          .setNegativeButton(<span class="string">"不行!"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">              <span class="meta">@Override</span></div><div class="line">              <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> which)</span> </span>&#123;</div><div class="line">                  Toast.makeText(getApplicationContext(), <span class="string">"瞅你扣那样!!!"</span>, Toast.LENGTH_LONG).show();</div><div class="line">              &#125;</div><div class="line">          &#125;).show();</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line">  mCanLoadForPhoneNet = <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// NetWorkUtil类</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetWorkUtil</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isWifi</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        ConnectivityManager connectivityManager = (ConnectivityManager) context</div><div class="line">                .getSystemService(Context.CONNECTIVITY_SERVICE);</div><div class="line">        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();</div><div class="line">        <span class="keyword">if</span> (activeNetInfo != <span class="keyword">null</span></div><div class="line">                &amp;&amp; activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后优化列表 <strong>只有在GridView静止的时候才进行图片加载, 避免滑动时候的无谓的线程加载消耗(即使ImageLoader内部使用了线程池, 你仍然有这么做的必要)</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">GridView gv_main = (GridView) findViewById(R.id.gv_main);</div><div class="line"><span class="comment">// 监听GridView的滑动状态</span></div><div class="line">  gv_main.setOnScrollListener(<span class="keyword">new</span> AbsListView.OnScrollListener() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onScrollStateChanged</span><span class="params">(AbsListView view, <span class="keyword">int</span> scrollState)</span> </span>&#123;</div><div class="line">          <span class="keyword">if</span> (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)&#123;</div><div class="line">              mIsGridViewIdle = <span class="keyword">true</span>;</div><div class="line">              <span class="comment">// 并触发更新adapter</span></div><div class="line">              imageAdapter.notifyDataSetChanged();</div><div class="line">          &#125;<span class="keyword">else</span>&#123;</div><div class="line">              mIsGridViewIdle = <span class="keyword">false</span>;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onScroll</span><span class="params">(AbsListView view, <span class="keyword">int</span> firstVisibleItem, <span class="keyword">int</span> visibleItemCount, <span class="keyword">int</span> totalItemCount)</span> </span>&#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
+<p>最后在<strong>adapter中的getView()设置标记位的判断, 只有在wifi和静止的状态下才进行加载请求</strong>下面是<code>getView()</code>代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View convertView, ViewGroup parent)</span> </span>&#123;</div><div class="line">  ViewHolder holder = <span class="keyword">null</span>;</div><div class="line">  <span class="keyword">if</span> (convertView == <span class="keyword">null</span>)&#123;</div><div class="line">      convertView = View.inflate(mContext, R.layout.item_photo_wall, <span class="keyword">null</span>);</div><div class="line">      holder = <span class="keyword">new</span> ViewHolder();</div><div class="line">      holder.mImageView = (ImageView) convertView.findViewById(R.id.iv_square);</div><div class="line">      convertView.setTag(holder);</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">      holder = (ViewHolder) convertView.getTag();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 设置默认图片</span></div><div class="line">  ImageView mImageView = holder.mImageView;</div><div class="line">  mImageView.setImageResource(android.R.drawable.screen_background_dark_transparent);</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">// 检测是否wifi 和 是否是滑动状态</span></div><div class="line">  <span class="comment">// 优化重点</span></div><div class="line">  <span class="keyword">if</span> (mCanLoadForPhoneNet &amp;&amp; mIsGridViewIdle)&#123;</div><div class="line">      <span class="comment">// 加载图片</span></div><div class="line">      mImageLoader.setImageView(mImageView).url(mUrls.get(position));</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="keyword">return</span> convertView;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Bitmap/" rel="tag"># Bitmap</a>
+          
+            <a href="/tags/图片缓存/" rel="tag"># 图片缓存</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/Callable和FutureTask/" rel="next" title="FutureTask & Callable">
+                <i class="fa fa-chevron-left"></i> FutureTask & Callable
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="jarkeet" />
+            
+              <p class="site-author-name" itemprop="name">jarkeet</p>
+              <p class="site-description motion-element" itemprop="description">总结、思考、践行</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jarkeet" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitmap的高效加载"><span class="nav-number">1.</span> <span class="nav-text">Bitmap的高效加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android中的缓存策略"><span class="nav-number">2.</span> <span class="nav-text">Android中的缓存策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LruCache"><span class="nav-number">2.1.</span> <span class="nav-text">LruCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DiskLruCache"><span class="nav-number">2.2.</span> <span class="nav-text">DiskLruCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageLoader的实现"><span class="nav-number">2.3.</span> <span class="nav-text">ImageLoader的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageLoader的使用"><span class="nav-number">3.</span> <span class="nav-text">ImageLoader的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#照片墙效果"><span class="nav-number">3.1.</span> <span class="nav-text">照片墙效果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarkeet</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
