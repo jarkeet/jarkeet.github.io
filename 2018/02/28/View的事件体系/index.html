@@ -88,11 +88,12 @@
 <meta property="og:description" content="View 的基础知识 View的位置参数 View相对于父容器的坐标top，left，right，bottom。 12width = right - leftheight = bottom - top 从Android 3.0开始增加了x、y、translationX、tranlationY；其中： View也提供了相应的get/set方法，关系换算： 12x = left + translati">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fovy1u4wcvj30km0ecq3j.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fow5gfjrbsj30yq0h43zu.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fprtnx6r4zj30sm0xm0wh.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-63b84cd5c4d9dee9.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-6ec2e864af7ffd37.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-76ce9e8299386729.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-eeebede55f55b040.png">
-<meta property="og:updated_time" content="2018-03-08T15:36:19.334Z">
+<meta property="og:updated_time" content="2018-03-27T16:12:57.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View的事件体系">
 <meta name="twitter:description" content="View 的基础知识 View的位置参数 View相对于父容器的坐标top，left，right，bottom。 12width = right - leftheight = bottom - top 从Android 3.0开始增加了x、y、translationX、tranlationY；其中： View也提供了相应的get/set方法，关系换算： 12x = left + translati">
@@ -474,19 +475,23 @@
 <li>onClick发生的前提是View是可点击的，并且收到了down和up事件。</li>
 <li>事件传递过程是由父元素分发到子元素，通过requestDisallowInterceptTouchEvent方法可以在子元素中干预夫元素的事件分发过程（ACTION_DOWN除外）。</li>
 </ol>
-<h4 id="事件分发源码解析"><a href="#事件分发源码解析" class="headerlink" title="事件分发源码解析"></a>事件分发源码解析</h4><p><strong>Activity对点击事件的分发过程</strong></p>
+<h4 id="事件分发源码解析"><a href="#事件分发源码解析" class="headerlink" title="事件分发源码解析"></a>事件分发源码解析</h4><p>事件分发总体图：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fprtnx6r4zj30sm0xm0wh.jpg" ,="" width="600px"></p>
+<p><strong>Activity对点击事件的分发过程</strong></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-63b84cd5c4d9dee9.png" ,="" width="450px"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Activiy—&gt;Window(PhoneWindow)—&gt;DecorView—&gt;ContentView—&gt;顶级ViewGroup—&gt;Views</div></pre></td></tr></table></figure>
-<p><strong>顶级View对点击事件的分发过程</strong></p>
+<p><strong>ViewGroup对点击事件的分发过程</strong></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-6ec2e864af7ffd37.png" ,="" width="500px"></p>
 <p><strong>View对点击事件的处理</strong></p>
-<p>​                           <img src="https://upload-images.jianshu.io/upload_images/944365-76ce9e8299386729.png" ,="" width="450px">/&gt;</p>
+<p>​                           <img src="https://upload-images.jianshu.io/upload_images/944365-76ce9e8299386729.png" ,="" width="450px"></p>
 <p>总结：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-eeebede55f55b040.png"></p>
 <blockquote>
 <p> 参考:</p>
 <p> <a href="https://www.jianshu.com/p/38015afcdb58" target="_blank" rel="external">Android事件分发机制详解</a></p>
-<p> [ <a href="http://blog.csdn.net/sinyu890807/article/details/9153747" target="_blank" rel="external">Android事件分发机制完全解析，带你从源码的角度彻底理解(下)</a>]</p>
+<p> <a href="http://blog.csdn.net/sinyu890807/article/details/9153747" target="_blank" rel="external">Android事件分发机制完全解析，带你从源码的角度彻底理解(下)</a></p>
+<p> <a href="https://blog.csdn.net/qian520ao/article/details/77429593" target="_blank" rel="external">Android View的事件分发机制和滑动冲突解决</a></p>
+<p> <a href="https://www.jianshu.com/p/e99b5e8bd67b" target="_blank" rel="external">图解 Android 事件分发机制</a></p>
 </blockquote>
 <h3 id="View-的滑动冲突"><a href="#View-的滑动冲突" class="headerlink" title="View 的滑动冲突"></a>View 的滑动冲突</h3><p>常见的滑动冲突场景：</p>
 <ul>
@@ -551,8 +556,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/02/26/RxJava 源码分析1/" rel="next" title="RxJava 源码分析1">
-                <i class="fa fa-chevron-left"></i> RxJava 源码分析1
+              <a href="/2018/02/22/IPC机制/" rel="next" title="IPC机制">
+                <i class="fa fa-chevron-left"></i> IPC机制
               </a>
             
           </div>
@@ -644,7 +649,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -655,7 +660,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -666,7 +671,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
