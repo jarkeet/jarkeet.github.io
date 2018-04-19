@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Writing something">
 <meta property="og:description" content="基于 RxJava 2.1.2  给定下面的一段代码，从源码的角度分析 RxJava 的实现原理： 12345678910111213141516171819202122232425262728293031323334353637ObservableOnSubscribe&amp;lt;Integer&amp;gt; oos = new ObservableOnSubscribe&amp;lt;Integer&amp;gt;(">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fq7s4tbhepj31by10o47c.jpg">
-<meta property="og:updated_time" content="2018-04-10T11:24:08.767Z">
+<meta property="og:updated_time" content="2018-04-11T07:43:10.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava 源码分析">
 <meta name="twitter:description" content="基于 RxJava 2.1.2  给定下面的一段代码，从源码的角度分析 RxJava 的实现原理： 12345678910111213141516171819202122232425262728293031323334353637ObservableOnSubscribe&amp;lt;Integer&amp;gt; oos = new ObservableOnSubscribe&amp;lt;Integer&amp;gt;(">
@@ -509,10 +509,15 @@
 <p>post 了一个 msg，这样就完成了线程的切换。</p>
 <p>下面上一张图，有助于理解和记忆：</p>
 <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fq7s4tbhepj31by10o47c.jpg" alt=""></p>
-<p>只需要理解，每次 observerOn 和 subscribeOn 的时候，内部都会创建一个新的 observable 和 observer。</p>
-<p>新创建的 observable 会引用前面的 observable，就是代码中我们分析的 source 变量。</p>
-<p>新创建的 observer 会引用前面的 observer，就是代码中我们分析的 actual 变量。</p>
-<p>最后我们 subscribe 的时候，是调用的最后创建的 observable 的方法。而每个 observable 内部又调用了 source 的 subscribe 方法，这样就形成了一层一层往前传递的调用链。当调用到最前面的一个 observable 的时候，就是我们自己创建的 observable，在这里我们需要手动触发该与该 observable 对应的 observer 对象的 onNext 方法。而 observer 的 onNext 方法的内部又调用了 actual 的 onNext 方法，这样就形成了一层一层往后传递的调用链。</p>
+<p>图中箭头的方向为事件传播的方向，如果定义方法调用的方向为顺序，那么当调用<code>observable.subscribe(observer)</code>的时候，⚠️订阅<code>subscribe</code>顺序是从下游回溯到上游，然后上游产生事件并发送，事件再传输到下游。</p>
+<ul>
+<li>每次执行 observerOn 和 subscribeOn 的时候，内部都会创建一个新的 Observable 和 Observer对象。</li>
+<li>下游的observable 会引用上游的 observable，即 source 变量。</li>
+<li>上游的observer 会引用下游的 observer，即 actual 变量。</li>
+<li>多次指定上游的线程只有第一次指定的有效, 也就是说多次调用<code>subscribeOn()</code> 只有第一次的有效, 其余的会被忽略。<strong>因为被观察者发送事件在所有上游线程切换完成之后才执行。</strong></li>
+<li>多次指定下游的线程是可以的, 也就是说每调用一次<code>observeOn()</code> , 下游的线程就会切换一次。<strong>因为接受事件在每个ObserveOnObserver对象的onNext中都会切换一次。</strong></li>
+</ul>
+<p>最后我们 subscribe 的时候，是调用的最后创建的 observable 的方法。而每个 observable 内部又调用了 source 的 subscribe 方法，这样就形成了一层一层往上传递的调用链。当调用到最前面的一个 observable 的时候，就是我们自己创建的 source Observable，在这里我们需要手动触发该与该 observable 对应的 observer 对象的 onNext 方法。而 observer 的 onNext 方法的内部又调用了 actual 的 onNext 方法，这样就形成了一层一层往后传递的调用链。</p>
 <p>虽然在我们的例子中，CreateEmitter 并不是一个 observer ，但是它也有 onNext 等方法，可以把它看做一个 observer。</p>
 <p>如此，RxJava 的一个流程就理清楚了。这货的流程和 OkHttp 怎么有点像，只是稍微有点不一样。</p>
 <p>补充一下关于背压的知识：在异步订阅的时候，使用 Observable，默认的缓冲大小是 128，超过 这个数量之后会 resize，也就是说会缓冲所有的事件，这样就会导致内存占用一直增加。</p>
