@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqh0o1ogo0j30v016aq6d.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2516256-2def0fd755207bfb.png">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqh1v7waoaj30ek0p2jrt.jpg">
-<meta property="og:updated_time" content="2018-04-19T08:55:48.405Z">
+<meta property="og:updated_time" content="2019-03-20T02:34:50.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View的工作原理">
 <meta name="twitter:description" content="ViewRoot和DecorView这是在View三大流程之前(measure, layout, draw),需要了解的概念. ViewRoot对应于ViewRootImpl类, 它是连接WindowManager和DecorView的纽带. View的三大流程都是通过ViewRoot来完成的. 当一个Activity对象在ActivityThread被创建后. 会将DecorView添加到Win">
@@ -397,7 +397,7 @@
 <p><code>PerformTraversals()</code>会依次调用<code>performMeasure</code>, <code>performLayout</code>, <code>performDraw</code>. 而前两种内部的调用基本一致,都是先调用<code>measure()/layout()</code>,然后再调用<code>onMeasure()/onLayout()</code>在这个方法中会对所有子元素进行测量和绘制.依次向内部传递. <code>performDraw()</code>有点不同是在<code>draw</code>调用的<code>dispatchDraw()</code>.</p>
 <a id="more"></a>
 <p><strong>PerformTraversals</strong>绘制流程如下图：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2516256-22e8ab0c969477d1.png" ,="" width="700px"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2516256-22e8ab0c969477d1.png" alt=""></p>
 <ul>
 <li><strong>measure过程</strong>: 决定了View宽高, measure后可以通过<code>getMeasureWidth和getMeasureHeight</code>来获取View的宽高. 一般情况下是最终宽高.</li>
 <li><strong>layout过程</strong>: 决定了View的顶点坐标和实际View的宽高. 完成后通过<code>getTop, getBottom, getLeft, getRight</code>获得四个顶点, 通过<code>getWidth,和getHeight</code>获得宽高</li>
@@ -405,7 +405,7 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setContentView(R.layout.activity_inside_intercept);</div><div class="line">((ViewGroup) getWindow().getDecorView().findViewById(android.R.id.content)).getChildAt(<span class="number">0</span>);</div></pre></td></tr></table></figure>
 <p>上面第一行可以说无时无刻不存在. 而下面这行在上一章说过就是获得我们设置的布局.那<code>DecorView</code>布局究竟是怎么样的, 下图.</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqh0o1ogo0j30v016aq6d.jpg" ,="" width="500px"></p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqh0o1ogo0j30v016aq6d.jpg" alt=""></p>
 <p><code>DecorView</code>就是一个FrameLayout. 而一般情况下它的布局就如上面图那样(具体和主题有关系). 而我们经常<code>setContentView(xxx)</code>. 就是把我们编写的xml的布局添加到了<code>DecorView</code>的<code>android.R.id.content</code>的控件布局中. 所以也就能说通为什么<code>getChildAt(0)</code>会获得我们的的布局.<br>并且为什么我们用的关联布局的方法是setContent…</p>
 <h2 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h2><blockquote>
 <p>很大程度上决定一个View的尺寸规格, 之所以不是绝对, 是因为这个过程还受父容器的影响.</p>
@@ -438,7 +438,7 @@
 </ul>
 <p>上述没有说明<code>UNSPECIFIED</code>在<code>match_parent</code>和<code>wrap_content</code>中. 因为这个模式主要用于系统多次Measure的情形,一般来说不需要关注.</p>
 <p><strong><em>普通View的MeasureSpec的创建流程</em></strong>,规则如下表所示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/2516256-2def0fd755207bfb.png" ,="" width="600px"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2516256-2def0fd755207bfb.png" alt=""></p>
 <h2 id="View的工作流程"><a href="#View的工作流程" class="headerlink" title="View的工作流程"></a>View的工作流程</h2><blockquote>
 <p>主要指measure, layout, draw三大流程. 即测量,布局,绘制.</p>
 </blockquote>
@@ -727,7 +727,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -738,7 +738,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -749,7 +749,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -812,7 +812,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -86,18 +86,18 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/28/View的事件体系/index.html">
 <meta property="og:site_name" content="Writing something">
 <meta property="og:description" content="View 的基础知识 View的位置参数 View相对于父容器的坐标top，left，right，bottom。 12width = right - leftheight = bottom - top 从Android 3.0开始增加了x、y、translationX、tranlationY；其中： View也提供了相应的get/set方法，关系换算： 12x = left + translati">
-<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fovy1u4wcvj30km0ecq3j.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g36x1w60hij30km0ecjs8.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fow5gfjrbsj30yq0h43zu.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcgy1fprtnx6r4zj30sm0xm0wh.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-63b84cd5c4d9dee9.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-6ec2e864af7ffd37.png">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-76ce9e8299386729.png">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/944365-eeebede55f55b040.png">
-<meta property="og:updated_time" content="2018-03-27T16:12:57.539Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g37105lfe0j30ge0o6jsn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g37118td3bj31ou0r4af2.jpg">
+<meta property="og:updated_time" content="2019-05-19T15:08:41.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="View的事件体系">
 <meta name="twitter:description" content="View 的基础知识 View的位置参数 View相对于父容器的坐标top，left，right，bottom。 12width = right - leftheight = bottom - top 从Android 3.0开始增加了x、y、translationX、tranlationY；其中： View也提供了相应的get/set方法，关系换算： 12x = left + translati">
-<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fovy1u4wcvj30km0ecq3j.jpg">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g36x1w60hij30km0ecjs8.jpg">
 
 
 
@@ -394,7 +394,7 @@
 
       
         <h3 id="View-的基础知识"><a href="#View-的基础知识" class="headerlink" title="View 的基础知识"></a>View 的基础知识</h3><hr>
-<h4 id="View的位置参数"><a href="#View的位置参数" class="headerlink" title="View的位置参数"></a>View的位置参数</h4><p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fovy1u4wcvj30km0ecq3j.jpg" width="400px"></p>
+<h4 id="View的位置参数"><a href="#View的位置参数" class="headerlink" title="View的位置参数"></a>View的位置参数</h4><p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g36x1w60hij30km0ecjs8.jpg" style="zoom:50%"></p>
 <p>View相对于父容器的坐标top，left，right，bottom。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">width = right - left</div><div class="line">height = bottom - top</div></pre></td></tr></table></figure>
 <p>从Android 3.0开始增加了x、y、translationX、tranlationY；其中：</p>
@@ -422,7 +422,6 @@
 <li><p>GestureDetector 手势检测，用于检测单击、滑动、长按、双击等行为。需要实现接口<code>onGestureListener</code>和<code>onDoubleTapListener</code>比较常用的有：onSingleTapUp（单击）、onFling（快速滑动）、onScoll（拖动）、onLongPress（长按）、onDoubleTap（双击）。</p>
 </li>
 <li><p>Scroll实现弹性滑动。</p>
-<p>​</p>
 </li>
 </ul>
 <h3 id="View的滑动"><a href="#View的滑动" class="headerlink" title="View的滑动"></a>View的滑动</h3><hr>
@@ -438,7 +437,6 @@
 <li><p>属性动画</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ObjectAnimator.ofFloat(targetView, <span class="string">"translationX"</span>, <span class="number">0</span>, <span class="number">100</span>).setDuration(<span class="number">100</span>).start();</div></pre></td></tr></table></figure>
 <p>属性动画能够改变原始位置，没有缺点，优先推荐使用。</p>
-<p>​</p>
 </li>
 </ul>
 <h4 id="改变布局参数"><a href="#改变布局参数" class="headerlink" title="改变布局参数"></a>改变布局参数</h4><p>改变View的布局参数LayoutParams，适用于有交互的View，操作稍微复杂。</p>
@@ -476,16 +474,16 @@
 <li>事件传递过程是由父元素分发到子元素，通过requestDisallowInterceptTouchEvent方法可以在子元素中干预夫元素的事件分发过程（ACTION_DOWN除外）。</li>
 </ol>
 <h4 id="事件分发源码解析"><a href="#事件分发源码解析" class="headerlink" title="事件分发源码解析"></a>事件分发源码解析</h4><p>事件分发总体图：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fprtnx6r4zj30sm0xm0wh.jpg" ,="" width="600px"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fprtnx6r4zj30sm0xm0wh.jpg" ,="" style="width:600px"></p>
 <p><strong>Activity对点击事件的分发过程</strong></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-63b84cd5c4d9dee9.png" ,="" width="450px"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Activiy—&gt;Window(PhoneWindow)—&gt;DecorView—&gt;ContentView—&gt;顶级ViewGroup—&gt;Views</div></pre></td></tr></table></figure>
 <p><strong>ViewGroup对点击事件的分发过程</strong></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/944365-6ec2e864af7ffd37.png" ,="" width="500px"></p>
 <p><strong>View对点击事件的处理</strong></p>
-<p>​                           <img src="https://upload-images.jianshu.io/upload_images/944365-76ce9e8299386729.png" ,="" width="450px"></p>
+<p>​                           <img src="http://ww1.sinaimg.cn/large/006tNc79ly1g37105lfe0j30ge0o6jsn.jpg" ,="" style="zoom:50%"></p>
 <p>总结：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/944365-eeebede55f55b040.png"></p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g37118td3bj31ou0r4af2.jpg"></p>
 <blockquote>
 <p> 参考:</p>
 <p> <a href="https://www.jianshu.com/p/38015afcdb58" target="_blank" rel="external">Android事件分发机制详解</a></p>
@@ -649,7 +647,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -660,7 +658,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -671,7 +669,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -734,7 +732,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

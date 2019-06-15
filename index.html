@@ -296,6 +296,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/14/性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jarkeet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Writing something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/14/性能优化/" itemprop="url">聊聊性能优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-14T22:00:00+08:00">
+                2019-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="布局优化"><a href="#布局优化" class="headerlink" title="布局优化"></a>布局优化</h4><ol>
+<li><p>尽量减少嵌套 include、merge、ViewStub</p>
+</li>
+<li><p>减少过度绘制 backgroud属性不要重复设置</p>
+</li>
+<li><p>简单页面优先使用LinearLayout 、FrameLayout、复杂页面使用ConstraintLayout</p>
+</li>
+<li><p>onDraw不要做耗时任务，不要循环创建大量对象</p>
+<p>​</p>
+</li>
+</ol>
+<h5 id="渲染问题"><a href="#渲染问题" class="headerlink" title="渲染问题"></a>渲染问题</h5><ul>
+<li><p>过度绘制（设置 — 开发者选项 — 调试GPU过度绘制—x4次红色显示）</p>
+<ul>
+<li>​ 1、移除或修改Theme、Window默认的Background  </li>
+<li>2、移除XML布局文件中非必需的Background </li>
+<li>3、按需显示占位背景图片 </li>
+<li>4、控制绘制区域</li>
+</ul>
+</li>
+<li><p>布局优化</p>
+<ul>
+<li>减少布局嵌套和层级</li>
+<li>merge、include、ViewStub</li>
+</ul>
+</li>
+<li><p>查看渲染性能工具</p>
+<ul>
+<li>GPU呈现模式分析</li>
+<li>GPU monitor</li>
+<li>启用严格模式：主线程上执行长时间操作会闪烁屏幕</li>
+</ul>
+</li>
+<li><p>性能优化必备神器Lint检查工具，Performance</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/14/性能优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/Retrofit源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -699,7 +878,8 @@
       
         
           <h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>HashMap 是基于哈希表的 Map 接口的实现，以 Key-Value 的形式存在，即存储的对象是 Entry (同时包含了 Key 和 Value) 。在HashMap中，其会根据hash算法来计算key-value的存储位置并进行快速存取。特别地，<strong>HashMap最多只允许一条Entry的键为Null(多条会覆盖)，但允许多条Entry的值为Null。</strong>此外，HashMap 是 Map 的一个<strong>非同步</strong>的实现。</p>
-<p><img src="https://img-blog.csdn.net/20170317181610752?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvanVzdGxvdmV5b3Vf/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" ,width="500px"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g15uzxw5mzj30sa0hojs0.jpg" alt=""></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1g15uzxw5mzj30sa0hojs0.jpg"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/27/HashMap/#more" rel="contents">
@@ -1649,160 +1829,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/四大组件的工作过程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jarkeet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Writing something">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/四大组件的工作过程/" itemprop="url">四大组件的工作过程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T11:16:00+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android开发艺术探索/" itemprop="url" rel="index">
-                    <span itemprop="name">Android开发艺术探索</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="四大组件的运行状态"><a href="#四大组件的运行状态" class="headerlink" title="四大组件的运行状态"></a>四大组件的运行状态</h2><p>四大组件中除了<code>BroadcastReceiver</code>以外, 其余的三种组件都必须在<strong>AndroidManifest</strong>中注册, 对于<code>BroadcastReceiver</code>来说, 既可以在清单文件中注册, 也可以通过代码来注册. 在调用形式上除了<code>ContentProvider</code>不需要借助<code>Intent</code>. 其余的三大组件都需要Intent</p>
-<p><strong>Activity</strong>是一种展示型组件, 用于向用户直接地展示一个界面, 并且可以接收用户的输入信息从而进行交互. <code>Activity</code>是最重要的一种组件, 对于用户来说它就是应用的全部, 因为其他三大组件对用户来说是无法感知的. <code>Activity</code>的启动由<code>Intent</code>触发, 其中<code>Intent</code>可以分为<strong>显式和隐式</strong>. <strong>显式Intent</strong>可以明确的指向一个<code>Activity</code>, 而<strong>隐式Intent</strong>则指向一个或者多个Activity组件. 或者是没有<code>Activity</code>组件可以处理这个隐式的Intent. 一个<code>Activity</code>具有特定的启动模式. 也可以通过<code>finish</code>来停止. 总结来说, <code>Activity</code>组件的主要作用是展示一个界面并和用户交互, 它扮演的是一种前台界面的角色.</p>
-<hr>
-<p><strong>Service</strong>是一种计算型组件, 用于后台执行一系列计算任务. 运行在后台,用户是无法感知的. <code>Service</code>和<code>Activity</code>的不同: <code>Activity</code>组件只有一种运行模式,即<code>Activity</code>处于启动状态, 但是<code>Service</code>组件有两种状态: <strong>启动状态</strong>和<strong>绑定状态</strong>.</p>
-<ul>
-<li><p>当<code>Service</code>处于启动状态时, 这个时候Service内部可以做一些后台计算. 尽管<code>Service</code>组件是用于执行后台计算的, 但是它本身是运行在主线程的. 因此单独的耗时操作仍然需要单独的线程去执行.</p>
-</li>
-<li><p>当<code>Service</code>处于绑定状态时, 内部同样可以进行后台计算, 但是处于这种状态时, 外界可以很方便的和<code>Service</code>组件进行通信.</p>
-<p><code>Service</code>可以停止, 需要灵活采用<code>stopService</code>和<code>unBindService</code></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/09/四大组件的工作过程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1857,7 +1883,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1868,7 +1894,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1879,7 +1905,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1926,7 +1952,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

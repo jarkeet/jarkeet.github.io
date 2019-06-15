@@ -86,14 +86,15 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/22/IPC机制/index.html">
 <meta property="og:site_name" content="Writing something">
 <meta property="og:description" content="Android中的多进程模式开启多进程模式  在AndroidMenifest中为四大组件指定android:process属性  通过JNI在native层fork一个新的进程  查看进程信adb shell ps | grep packagename   android:process 属性方式区别  “:remote”开头，进程名为packagename:remote ,属于当前应用的私有进">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fqibvzwbi2j310u0j8djy.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fovd72o0tzj31320jimz3.jpg">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fovg5azxv2j30rk0cst9m.jpg">
 <meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fove2hqekdj316a0ho0ux.jpg">
-<meta property="og:updated_time" content="2018-03-02T07:58:20.347Z">
+<meta property="og:updated_time" content="2018-04-19T14:26:06.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IPC机制">
 <meta name="twitter:description" content="Android中的多进程模式开启多进程模式  在AndroidMenifest中为四大组件指定android:process属性  通过JNI在native层fork一个新的进程  查看进程信adb shell ps | grep packagename   android:process 属性方式区别  “:remote”开头，进程名为packagename:remote ,属于当前应用的私有进">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fovd72o0tzj31320jimz3.jpg">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fqibvzwbi2j310u0j8djy.jpg">
 
 
 
@@ -440,6 +441,21 @@
 <p>Parcelable主要用在内存序列化上，效率高，Android平台推荐用。</p>
 <p>但是对象序列化后要网络传输和持久化存储推荐用Serialable。</p>
 </blockquote>
+<p><strong>Binder驱动</strong></p>
+<p>Client和Server分别属于不同的进程，他们之间的对象不能直接共享，那么是怎么传递的呢？</p>
+<p>其实就是通过<strong>Binder驱动</strong>。Client端拿到的其实是Server端Binder对象的Proxy对象，通过调用该Proxy对象的方法，实际效果相当于Server的Binder中的方法。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fqibvzwbi2j310u0j8djy.jpg" ,="" width="600px"></p>
+<ul>
+<li><p>从进程间通信的角度看，Binder 是一种进程间通信的机制；</p>
+</li>
+<li><p>从 Server 进程的角度看，Binder 指的是 Server 中的 Binder 实体对象；</p>
+</li>
+<li><p>从 Client 进程的角度看，Binder 指的是对 Binder 代理对象，是 Binder 实体对象的一个远程代理</p>
+</li>
+<li><p>从传输过程的角度看，Binder 是一个可以跨进程传输的对象；Binder 驱动会对这个跨越进程边界的对象对一点点特殊处理，自动完成代理对象和本地对象之间的转换。</p>
+<p>​</p>
+</li>
+</ul>
 <p><strong>Binder</strong></p>
 <p>Binder是客户端和服务端通信的媒介，当bindService的时候，服务端会返回一个包含了服务端业务调用的Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务和数据。aidl类核心实现内部类<code>Stub</code>以及<code>Stub</code>的内部代理类<code>Proxy</code>。</p>
 <ul>
@@ -704,7 +720,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -715,7 +731,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -726,7 +742,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -789,7 +805,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
