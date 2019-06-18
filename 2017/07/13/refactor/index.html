@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="重构,refactor," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,33 +79,33 @@
 
 
 
-<meta name="description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
-<meta name="keywords" content="重构,refactor">
+<meta name="description" content="#重构  Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  ###重构原则 何为重构  对软件内部">
+<meta name="keywords" content="Hexo, NexT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重构 改善既有的代码设计">
+<meta property="og:title" content="Writing something">
 <meta property="og:url" content="http://yoursite.com/2017/07/13/refactor/index.html">
 <meta property="og:site_name" content="Writing something">
-<meta property="og:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG9.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG10.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG11.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG12.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG13.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG14.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG15.jpeg?imageMogr2/auto-orient/thumbnail/!75p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG16.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG17.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG18.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
-<meta property="og:image" content="http://ospabkxm6.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif">
-<meta property="og:updated_time" content="2018-02-13T02:51:20.541Z">
+<meta property="og:description" content="#重构  Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  ###重构原则 何为重构  对软件内部">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG9.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG10.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG11.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG12.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG13.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG14.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG15.jpeg?imageMogr2/auto-orient/thumbnail/!75p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG16.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG17.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG18.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta property="og:image" content="http://ptapgc8ls.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif">
+<meta property="og:updated_time" content="2019-06-18T13:13:50.810Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重构 改善既有的代码设计">
-<meta name="twitter:description" content="《重构改善既有代码设计》  重构 Extract Method (提炼函数)  Move Method (搬移函数）  Self Encapsulate Field (自封装字段)  Replace Type Code With State/Strategy (以状态／策略模式取代状态码)  Replace Condition with Polymorphism (以多态取代条件表达式)">
-<meta name="twitter:image" content="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
+<meta name="twitter:title" content="Writing something">
+<meta name="twitter:description" content="#重构  Extract Method (提炼函数) Move Method (搬移函数） Self Encapsulate Field (自封装字段) Replace Type Code With State/Strategy (以状态／策略模式取代状态码) Replace Condition with Polymorphism (以多态取代条件表达式)  ###重构原则 何为重构  对软件内部">
+<meta name="twitter:image" content="http://ptapgc8ls.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim">
 
 
 
@@ -141,7 +141,7 @@
 
 
 
-  <title>重构 改善既有的代码设计 | Writing something</title>
+  <title> | Writing something</title>
   
 
 
@@ -329,7 +329,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">重构 改善既有的代码设计</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -341,7 +341,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T23:44:38+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T23:38:16+08:00">
                 2017-07-13
               </time>
             
@@ -351,28 +351,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/重构/" itemprop="url" rel="index">
-                    <span itemprop="name">重构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -401,96 +379,51 @@
       
 
       
-        <blockquote>
-<p><strong><em>《重构改善既有代码设计》</em></strong></p>
-</blockquote>
-<h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ol>
-<li><p>Extract Method (提炼函数)</p>
-</li>
-<li><p>Move Method (搬移函数）</p>
-</li>
-<li><p>Self Encapsulate Field (自封装字段)</p>
-</li>
-<li><p>Replace Type Code With State/Strategy (以状态／策略模式取代状态码)</p>
-</li>
-<li><p>Replace Condition with Polymorphism (以多态取代条件表达式)</p>
-<a id="more"></a>
-</li>
-</ol>
-<h3 id="重构原则"><a href="#重构原则" class="headerlink" title="重构原则"></a>重构原则</h3><hr>
-<ul>
-<li><p>何为重构 </p>
-</li>
-<li><p>对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</p>
-</li>
-<li><p>为何重构</p>
-</li>
-<li><p>改进软件设计、是软件更容易理解、帮助找到bug、提高编程速度。</p>
-</li>
-<li><p>何时重构</p>
-</li>
-<li><p>添加功能时重构、修补错误时重构、复审代码时重构</p>
-</li>
-<li><p>重构与间接层</p>
-</li>
-<li><p>间接层价值： 允许逻辑共享、分开解释意图和实现、隔离变化、封装条件逻辑（多态）</p>
-</li>
-<li><p>重构的难题 </p>
-</li>
-<li><p>数据库迁移、修改已公布的接口、难以重构的复杂设计</p>
-<p>​</p>
-</li>
-</ul>
-<h3 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="代码的坏味道"></a>代码的坏味道</h3><hr>
-<ul>
-<li><p>Duplicated code（重复代码）</p>
-</li>
-<li><p>Long Method（过长函数）</p>
-</li>
-<li><p>Large Class（过大的类）</p>
-</li>
-<li><p>Long Parameter List (过长参数列）</p>
-</li>
-<li><p>Divergent Change （发散式变化）一种类受多种变化的影响，类过大，需Extract class</p>
-</li>
-<li><p>Shotgun Surgery（散弹式修改）一种变化引起多个类修改，需Move Method移到同一个类</p>
-</li>
-<li><p>Feature Envy（依恋情结）总是一起变化的东西放在一块</p>
-</li>
-<li><p>Data Clumps （数据泥团）多个类中重复的字段、方法。需Extract class到一个独立对象</p>
-</li>
-<li><p>Primitive Obsesstion （基本类型偏执）必要时用对象代替基本数据</p>
-</li>
-<li><p>Switch Statement（switch语句）需要抽出方法，用子类或state/strategy模式替代</p>
-</li>
-<li><p>Parallel Inheritance Hierarchies （平行继承体系）散弹修改的一种，需用引用代替继承</p>
-</li>
-<li><p>Lazy Class（冗余类）</p>
-</li>
-<li><p>Speculative Generality（夸夸其谈未来性）多余的抽象、委托、参数应该去除</p>
-</li>
-<li><p>Temporary Field (迷惑的暂时字段) 可以的话提炼到一个独立的类中</p>
-</li>
-<li><p>Message ChainsI（过度耦合的消息链）</p>
-</li>
-<li><p>Middle Man（中间人）过度使用委托</p>
-</li>
-<li><p>Inappropriate Intimacy (狎昵关系) 拆散过渡亲密的类，Move Method 或 Move Field到合适的地方；提炼共性到新类；Replace Inheritance with Delegation</p>
-</li>
-<li><p>Alternative Classes With Different Interfaces (异曲同工的类) 重新命名或提取超类</p>
-</li>
-<li><p>Incomplete Library Class (不完美的类库)</p>
-</li>
-<li><p>Data Class（存粹的数据类）注意封装和访问权限</p>
-</li>
-<li><p>Refused Bequest（被拒绝的馈赠）子类服用的超类的行为（实现），却不愿支持超类的接口，需重构（这里思考Basesso类的3个abstract方法有这个问题，不愿支持超类的接口）</p>
-</li>
-<li><p>Comments（过多注释）</p>
-<p>​</p>
-</li>
-</ul>
-<h3 id="重新组织函数"><a href="#重新组织函数" class="headerlink" title="重新组织函数"></a>重新组织函数</h3><hr>
+        <p>#重构</p>
 <ol>
+<li>Extract Method (提炼函数)</li>
+<li>Move Method (搬移函数）</li>
+<li>Self Encapsulate Field (自封装字段)</li>
+<li>Replace Type Code With State/Strategy (以状态／策略模式取代状态码)</li>
+<li>Replace Condition with Polymorphism (以多态取代条件表达式)</li>
+</ol>
+<h2 id="重构原则"><a href="#重构原则" class="headerlink" title="###重构原则"></a>###重构原则</h2><ul>
+<li>何为重构 </li>
+<li>对软件内部结构的一种调整，目的是在不改变软件可观察行为的前提下，提高其可理解性，降低其修改成本。</li>
+<li>为何重构</li>
+<li>改进软件设计、是软件更容易理解、帮助找到bug、提高编程速度。</li>
+<li>何时重构</li>
+<li>添加功能时重构、修补错误时重构、复审代码时重构</li>
+<li>重构与间接层</li>
+<li>间接层价值： 允许逻辑共享、分开解释意图和实现、隔离变化、封装条件逻辑（多态）</li>
+<li>重构的难题 </li>
+<li>数据库迁移、修改已公布的接口、难以重构的复杂设计</li>
+</ul>
+<h2 id="代码的坏味道"><a href="#代码的坏味道" class="headerlink" title="###代码的坏味道"></a>###代码的坏味道</h2><ul>
+<li>Duplicated code（重复代码）</li>
+<li>Long Method（过长函数）</li>
+<li>Large Class（过大的类）</li>
+<li>Long Parameter List (过长参数列）</li>
+<li>Divergent Change （发散式变化）一种类受多种变化的影响，类过大，需Extract class</li>
+<li>Shotgun Surgery（散弹式修改）一种变化引起多个类修改，需Move Method移到同一个类</li>
+<li>Feature Envy（依恋情结）总是一起变化的东西放在一块</li>
+<li>Data Clumps （数据泥团）多个类中重复的字段、方法。需Extract class到一个独立对象</li>
+<li>Primitive Obsesstion （基本类型偏执）必要时用对象代替基本数据</li>
+<li>Switch Statement（switch语句）需要抽出方法，用子类或state/strategy模式替代</li>
+<li>Parallel Inheritance Hierarchies （平行继承体系）散弹修改的一种，需用引用代替继承</li>
+<li>Lazy Class（冗余类）</li>
+<li>Speculative Generality（夸夸其谈未来性）多余的抽象、委托、参数应该去除</li>
+<li>Temporary Field (迷惑的暂时字段) 可以的话提炼到一个独立的类中</li>
+<li>Message ChainsI（过度耦合的消息链）</li>
+<li>Middle Man（中间人）过度使用委托</li>
+<li>Inappropriate Intimacy (狎昵关系) 拆散过渡亲密的类，Move Method 或 Move Field到合适的地方；提炼共性到新类；Replace Inheritance with Delegation</li>
+<li>Alternative Classes With Different Interfaces (异曲同工的类) 重新命名或提取超类</li>
+<li>Incomplete Library Class (不完美的类库)</li>
+<li>Data Class（存粹的数据类）注意封装和访问权限</li>
+<li>Refused Bequest（被拒绝的馈赠）子类服用的超类的行为（实现），却不愿支持超类的接口，需重构（这里思考Basesso类的3个abstract方法有这个问题，不愿支持超类的接口）</li>
+<li>Comments（过多注释）</li>
+</ul>
+<h2 id="重新组织函数"><a href="#重新组织函数" class="headerlink" title="###重新组织函数"></a>###重新组织函数</h2><ol>
 <li><strong>Extract Method（提炼函数）</strong></li>
 </ol>
 <ul>
@@ -535,7 +468,7 @@
 <ul>
 <li>代码对参数进行赋值，以一个临时变量取代该参数的位置</li>
 <li><p>Java是按值传递的 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">aMethod</span><span class="params">(Object foo)</span> </span>&#123;	</div><div class="line">		foo.modifySomeWay();   <span class="comment">//that's OK，将改变foo引用的对象 </span></div><div class="line">		foo = anothnerObject;   <span class="comment">//trouble will follow, 函数返回后并不会改变foo。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">aMethod</span><span class="params">(Object foo)</span> </span>&#123;	</div><div class="line">		foo.modifySomeWay();   <span class="comment">//that's OK，将改变foo引用的对象 </span></div><div class="line">		foo = anothnerObject;   <span class="comment">//trouble will follow, 函数返回后并不会改变foo。</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
 <ol>
@@ -551,12 +484,9 @@
 <li><strong>Substitute Algorithm (替换算法)</strong></li>
 </ol>
 <ul>
-<li><p>将函数本体替换为新的算法，建议先考虑分解函数再做替换。</p>
-<p>​</p>
-</li>
+<li>将函数本体替换为新的算法，建议先考虑分解函数再做替换。</li>
 </ul>
-<h3 id="在对象之间搬移特性"><a href="#在对象之间搬移特性" class="headerlink" title="在对象之间搬移特性"></a>在对象之间搬移特性</h3><hr>
-<ol>
+<h2 id="在对象之间搬移特性"><a href="#在对象之间搬移特性" class="headerlink" title="###在对象之间搬移特性"></a>###在对象之间搬移特性</h2><ol>
 <li><strong>Move Method (搬移函数)</strong></li>
 </ol>
 <ul>
@@ -585,8 +515,11 @@
 <li><strong>Hide Delegate (隐藏“委托关系“)</strong></li>
 </ol>
 <ul>
-<li>客户类通过委托类来调用另一个对象，在服务类上建立客户需要的所有委托函数，用于隐藏委托关系。  </li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="简单委托关系"></li>
+<li><p>客户类通过委托类来调用另一个对象，在服务类上建立客户需要的所有委托函数，用于隐藏委托关系。 </p>
+<p>​</p>
+</li>
+<li><p><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG5.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="简单委托关系"></p>
+</li>
 </ul>
 <ol>
 <li><strong>Remove Middle Man（移除中间人）</strong></li>
@@ -608,14 +541,10 @@
 <li><strong>Introduce Local Extension (引入本地扩展)</strong></li>
 </ol>
 <ul>
-<li><p>场景：你需要为服务类提供<strong><em>一些额外的函数</em></strong>，但是你无法修改这个类</p>
-</li>
-<li><p>应对：建立一个新类，包含这些额外的函数，让这个扩展品称为源类的字类（subclass）或包装类（wrapper）；</p>
-<p>​</p>
-</li>
+<li>场景：你需要为服务类提供<strong><em>一些额外的函数</em></strong>，但是你无法修改这个类</li>
+<li>应对：建立一个新类，包含这些额外的函数，让这个扩展品称为源类的字类（subclass）或包装类（wrapper）；</li>
 </ul>
-<h3 id="重新组织数据"><a href="#重新组织数据" class="headerlink" title="重新组织数据"></a>重新组织数据</h3><hr>
-<ol>
+<h2 id="重新组织数据"><a href="#重新组织数据" class="headerlink" title="###重新组织数据"></a>###重新组织数据</h2><ol>
 <li><strong>Self Encapsulate Field (自封装字段)</strong></li>
 </ol>
 <ul>
@@ -635,7 +564,7 @@
 </ol>
 <ul>
 <li>从一个类衍生出多个相等的实例，希望它们是同一个对象；将值对象变成引用对象；</li>
-<li>多个Order共享同一个Customer对象<img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P179"></li>
+<li>多个Order共享同一个Customer对象<img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG8.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P179"></li>
 <li>引用对象都代表真实世界中的一个实物，可以用<code>==</code>直接检查两个对象是否相等；如“客户”、“账户”等..</li>
 <li>值对象不可变，完全由其数据值来定义，有多个副本存在，需要复写<code>equals()</code>判断是否相等，如“日期”、“钱”..</li>
 </ul>
@@ -644,7 +573,7 @@
 </ol>
 <ul>
 <li>有一个引用对象，很小且不可变，将它改为值对象。</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG9.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""><ul>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG9.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""><ul>
 <li>值对象是“不可变”（immutable）的，表示对象自身是不可变的。判断相等用<code>equals()</code>方法</li>
 </ul>
 </li>
@@ -662,7 +591,7 @@
 <ul>
 <li>有一些领域（Model）数据置身于GUI控件中，而领域函数需要访问需要访问这数据；</li>
 <li>将该数据复制到领域对象中，建立一个Observer模式，用以同步领域对象和GUI对象内的重复数据；</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG10.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG10.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""></li>
 </ul>
 <ol>
 <li><strong>Change Unidirectional Association to Bidirectional(将单向关联改为双向关联)</strong></li>
@@ -670,7 +599,7 @@
 <ul>
 <li>场景：两个类都需要使用对方的特性，但只有一条单向关联</li>
 <li>实现：添加一个反向指针，并使修改函数能够同事更新两条连接</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG11.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P197"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG11.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P197"></li>
 <li>决定哪个类是控制端；控制端（提供控制函数，维护反向指针），修改函数调用控制函数；被控制端（提供一个辅助函数提供反向指针），修改函数调用控制端的控制函数。</li>
 </ul>
 <ol>
@@ -694,7 +623,7 @@
 <li><strong>Encapsulate Collection(封装集合)</strong><ul>
 <li>场景：有一个函数返回一个集合</li>
 <li>优化：让这个函数返回该集合的一个只读副本，并提供添加／移除该集合元素的方法</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG12.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P208"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG12.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P208"></li>
 </ul>
 </li>
 <li><strong>Replace Record with Data Class(以数据类取代记录)</strong><ul>
@@ -704,33 +633,28 @@
 <li><strong>Replace Type Code with Class(以类取代类型码)</strong><ul>
 <li>场景：类中又一个数值类型码，但它并不影响类的行为</li>
 <li>以一个新的类替换该数值类型码</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG13.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P218"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG13.jpeg?imageMogr2/auto-orient/thumbnail/!40p/blur/1x0/quality/100|imageslim" alt="P218"></li>
 </ul>
 </li>
 <li><strong>Replace Type Code with Subclasses(以子类取代类型码)</strong><ul>
 <li>场景：有一个不可变的类型码，它会影响类的行为</li>
 <li>重构：以字类取代这个类型码，借助多态实现变化行为,将和特定字类相关的字段／函数<code>push down</code>到字类</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG14.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P223"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG14.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P223"></li>
 </ul>
 </li>
 <li><strong>Replace Type Code with State/Stratege(以状态／策略取代类型码)</strong><ul>
 <li>场景：如果<code>一个类型码的值在对象生命周期发生变化</code>或者<code>其他原因是宿主类不能被继承</code>；</li>
 <li>重构：以状态对象或策略模式取代类型码</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG15.jpeg?imageMogr2/auto-orient/thumbnail/!75p/blur/1x0/quality/100|imageslim" alt="P227"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG15.jpeg?imageMogr2/auto-orient/thumbnail/!75p/blur/1x0/quality/100|imageslim" alt="P227"></li>
 </ul>
 </li>
-<li><p><strong>Replace Subclass with Fields(以字段代替子类)</strong></p>
-<ul>
-<li><p>场景：各个子类的唯一差别只在“返回常量数据”的函数身上</p>
-</li>
-<li><p>重构：修改这些函数，使它们返回超类中的某个（新增）字段，然后销毁子类</p>
-<p>​</p>
-</li>
+<li><strong>Replace Subclass with Fields(以字段代替子类)</strong><ul>
+<li>场景：各个子类的唯一差别只在“返回常量数据”的函数身上</li>
+<li>重构：修改这些函数，使它们返回超类中的某个（新增）字段，然后销毁子类</li>
 </ul>
 </li>
 </ol>
-<h3 id="简化条件表达式"><a href="#简化条件表达式" class="headerlink" title="简化条件表达式"></a>简化条件表达式</h3><hr>
-<ol>
+<h2 id="简化条件表达式"><a href="#简化条件表达式" class="headerlink" title="###简化条件表达式"></a>###简化条件表达式</h2><ol>
 <li><strong>Decompose Conditional(简化条件表达式)</strong></li>
 </ol>
 <ul>
@@ -774,7 +698,7 @@
 <ul>
 <li>场景：有一个条件表达式，根据对象类型的不同选择不同的行为</li>
 <li>重构：将这个条件表达式的每个分支放进一个子类的复写函数中，然后将原始的函数声明为抽象</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG16.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P255"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG16.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P255"></li>
 <li>在使用<code>Replace Coditional with Polymorphism</code>之前,必须建立一个继承结构：优先使用<code>Repalce Type Code with Subclass</code>，但是如果需要在对象创建后修改类型码，就不能用继承手法，那么使用 <code>Replace Type Code with State/Stratege</code>;</li>
 </ul>
 <ol>
@@ -783,7 +707,7 @@
 <ul>
 <li>场景：你需要再三检查某个对象是否为null</li>
 <li>重构：建立Null对象，替换null值的判断</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG17.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P260"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG17.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P260"></li>
 <li>空对象继承源对象，或者实现Null Interface；空对象一定是一个常量，它的任何成分都不会变化；</li>
 </ul>
 <ol>
@@ -792,8 +716,7 @@
 <ul>
 <li>某一段代码需要对程序状态作出假设，以断言明确表示这种假设</li>
 </ul>
-<h3 id="简化函数调用"><a href="#简化函数调用" class="headerlink" title="简化函数调用"></a>简化函数调用</h3><hr>
-<ol>
+<h2 id="简化函数调用"><a href="#简化函数调用" class="headerlink" title="###简化函数调用"></a>###简化函数调用</h2><ol>
 <li><strong>Rename Method(函数改名)</strong></li>
 </ol>
 <ul>
@@ -825,7 +748,7 @@
 <ul>
 <li>若干函数做了类似的工作，但因少数几个值致使行为略有不同</li>
 <li>建立单一函数，以参数表达那些不同的值</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG18.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG18.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt=""></li>
 </ul>
 <ol>
 <li><strong>Replace Parameter with Explicit Method(以明确函数取代参数)</strong></li>
@@ -908,8 +831,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="概括处理关系"><a href="#概括处理关系" class="headerlink" title="概括处理关系"></a>概括处理关系</h3><hr>
-<ol>
+<h2 id="概括处理关系"><a href="#概括处理关系" class="headerlink" title="###概括处理关系"></a>###概括处理关系</h2><ol>
 <li><strong>Pull Up Field(字段上移)</strong></li>
 </ol>
 <ul>
@@ -977,13 +899,13 @@
 <li><strong>From Template Method(塑造模版函数)</strong><ul>
 <li>场景：你有一些子类，其中相应的某些函数以相同的顺序执行类似的操作，但各个操作细节上有所不同</li>
 <li>重构：将这些细节操作分别放进独立的函数中，并保持它们都有相同的签名，于是原函数也变得相同了；然后将原函数上移到超类</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P345"> </li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG19.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P345"> </li>
 </ul>
 </li>
 <li><strong>Replace Inheritance with Delegation(以委托取代继承)</strong><ul>
 <li>场景：某些子类只使用超类接口中的一部分，或者根本不需要继承而来的数据</li>
 <li>重构：在子类中新建一个子段用以保存超类；调整子类函数令它委托超类；然后去掉继承关系</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P352"></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/WechatIMG20.jpeg?imageMogr2/auto-orient/thumbnail/!50p/blur/1x0/quality/100|imageslim" alt="P352"></li>
 </ul>
 </li>
 <li><strong>Replace Delegation with Inheritance(以继承取代委托)</strong><ul>
@@ -992,14 +914,13 @@
 </ul>
 </li>
 </ol>
-<h3 id="大型重构"><a href="#大型重构" class="headerlink" title="大型重构"></a>大型重构</h3><hr>
-<ol>
+<h2 id="大型重构"><a href="#大型重构" class="headerlink" title="###大型重构"></a>###大型重构</h2><ol>
 <li><strong>Tease Apart Inheritance(梳理并分解继承体系)</strong></li>
 </ol>
 <ul>
 <li>场景：某个继承体系同时承担两项责任</li>
 <li>重构：建立两个继承体系，并通过委托关系让其中一个可以调用另一个</li>
-<li><img src="http://ospabkxm6.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif" alt=""></li>
+<li><img src="http://ptapgc8ls.bkt.clouddn.com/2016-08-15_57b1b5e7ea705.gif" alt=""></li>
 </ul>
 <ol>
 <li><strong>Convert Procedural Design to Objects(将过程化设计转化为对象设计)</strong></li>
@@ -1037,14 +958,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/重构/" rel="tag"># 重构</a>
-          
-            <a href="/tags/refactor/" rel="tag"># refactor</a>
-          
-        </div>
-      
 
       
       
@@ -1054,8 +967,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/13/Activity生命周期和启动模式/" rel="next" title="Activity的生命周期和启动模式">
-                <i class="fa fa-chevron-left"></i> Activity的生命周期和启动模式
+              <a href="/2017/05/16/hexo/" rel="next" title="Hexo">
+                <i class="fa fa-chevron-left"></i> Hexo
               </a>
             
           </div>
@@ -1064,8 +977,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/22/IPC机制/" rel="prev" title="IPC机制">
-                IPC机制 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/13/Activity生命周期和启动模式/" rel="prev" title="Activity的生命周期和启动模式">
+                Activity的生命周期和启动模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1158,7 +1071,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1169,7 +1082,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1212,7 +1125,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构"><span class="nav-number">1.</span> <span class="nav-text">重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构原则"><span class="nav-number">1.1.</span> <span class="nav-text">重构原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码的坏味道"><span class="nav-number">1.2.</span> <span class="nav-text">代码的坏味道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新组织函数"><span class="nav-number">1.3.</span> <span class="nav-text">重新组织函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在对象之间搬移特性"><span class="nav-number">1.4.</span> <span class="nav-text">在对象之间搬移特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新组织数据"><span class="nav-number">1.5.</span> <span class="nav-text">重新组织数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简化条件表达式"><span class="nav-number">1.6.</span> <span class="nav-text">简化条件表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简化函数调用"><span class="nav-number">1.7.</span> <span class="nav-text">简化函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概括处理关系"><span class="nav-number">1.8.</span> <span class="nav-text">概括处理关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大型重构"><span class="nav-number">1.9.</span> <span class="nav-text">大型重构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构原则"><span class="nav-number">1.</span> <span class="nav-text">###重构原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码的坏味道"><span class="nav-number">2.</span> <span class="nav-text">###代码的坏味道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新组织函数"><span class="nav-number">3.</span> <span class="nav-text">###重新组织函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在对象之间搬移特性"><span class="nav-number">4.</span> <span class="nav-text">###在对象之间搬移特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新组织数据"><span class="nav-number">5.</span> <span class="nav-text">###重新组织数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化条件表达式"><span class="nav-number">6.</span> <span class="nav-text">###简化条件表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化函数调用"><span class="nav-number">7.</span> <span class="nav-text">###简化函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概括处理关系"><span class="nav-number">8.</span> <span class="nav-text">###概括处理关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型重构"><span class="nav-number">9.</span> <span class="nav-text">###大型重构</span></a></li></ol></div>
             
 
           </div>

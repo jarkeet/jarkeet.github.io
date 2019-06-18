@@ -86,7 +86,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/06/14/性能优化/index.html">
 <meta property="og:site_name" content="Writing something">
 <meta property="og:description" content="布局优化 尽量减少嵌套 include、merge、ViewStub  减少过度绘制 backgroud属性不要重复设置  简单页面优先使用LinearLayout 、FrameLayout、复杂页面使用ConstraintLayout  onDraw不要做耗时任务，不要循环创建大量对象 ​   渲染问题 过度绘制（设置 — 开发者选项 — 调试GPU过度绘制—x4次红色显示）  ​ 1、移除或修">
-<meta property="og:updated_time" content="2019-06-15T02:40:51.186Z">
+<meta property="og:updated_time" content="2019-06-15T15:13:46.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊性能优化">
 <meta name="twitter:description" content="布局优化 尽量减少嵌套 include、merge、ViewStub  减少过度绘制 backgroud属性不要重复设置  简单页面优先使用LinearLayout 、FrameLayout、复杂页面使用ConstraintLayout  onDraw不要做耗时任务，不要循环创建大量对象 ​   渲染问题 过度绘制（设置 — 开发者选项 — 调试GPU过度绘制—x4次红色显示）  ​ 1、移除或修">
@@ -430,12 +430,17 @@
 <li>单例/静态变量造成的内存泄漏</li>
 <li>匿名内部类/非静态内部类 </li>
 <li>资源未关闭造成的内存泄漏</li>
-<li>分析工具：Memory Monitor、 Leakcanary、MAT、TraceView、GT（腾讯移动调试平台）</li>
+<li>分析工具：Memory Profiler、 Leakcanary、MAT、TraceView、GT（腾讯移动调试平台）</li>
 </ul>
 <p><strong>内存浪费</strong></p>
 <ul>
-<li>使用ArrayMap、SparseArray（避免了自动装箱）代替HashMap</li>
-<li>避免使用Enum，内存耗费是final static int 的10几倍</li>
+<li><p>使用ArrayMap、SparseArray（避免了自动装箱）代替HashMap</p>
+</li>
+<li><p>避免使用Enum，内存耗费是final static int 的10几倍</p>
+</li>
+<li><p>内存抖动：避免循环体内大量创建大型对象</p>
+<p>​</p>
+</li>
 </ul>
 <h4 id="启动速度优化"><a href="#启动速度优化" class="headerlink" title="启动速度优化"></a>启动速度优化</h4><p><strong>思路：Application、Activity创建以及回调等过程</strong></p>
 <ul>
@@ -478,12 +483,21 @@
 </li>
 <li><p>懒惰第一的法则: 减少重复操作、推迟执行、合并处理</p>
 </li>
+<li><p>特别关注WakeLock、GPS、蓝牙等耗电业务</p>
+</li>
 </ul>
 <h4 id="BitMap优化"><a href="#BitMap优化" class="headerlink" title="BitMap优化"></a>BitMap优化</h4><ul>
 <li>对图片质量进行压缩 </li>
 <li>对图片尺寸进行压缩 </li>
 <li>使用libjpeg.so库进行压缩</li>
 <li>RecyclerView 分页加载，ListView使用ViewHolder</li>
+</ul>
+<h4 id="网络优化"><a href="#网络优化" class="headerlink" title="网络优化"></a>网络优化</h4><ul>
+<li>工具：WireShark、Fiddler、Charles、NetWork Profiler</li>
+<li>减少网络请求频次、Api接口合并请求</li>
+<li>Gzip压缩，用Protocol Buffer代替Json</li>
+<li>列表加载请求缩略图、webp、图片缓存</li>
+<li>IP直连，省去DNS解析过程</li>
 </ul>
 <h3 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h3><ul>
 <li>主线程避免耗时操作、异步处理</li>
@@ -634,7 +648,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -645,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -688,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#布局优化"><span class="nav-number">1.</span> <span class="nav-text">布局优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染问题"><span class="nav-number">1.1.</span> <span class="nav-text">渲染问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存优化"><span class="nav-number">2.</span> <span class="nav-text">内存优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动速度优化"><span class="nav-number">3.</span> <span class="nav-text">启动速度优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apk大小优化"><span class="nav-number">4.</span> <span class="nav-text">Apk大小优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#耗电优化"><span class="nav-number">5.</span> <span class="nav-text">耗电优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BitMap优化"><span class="nav-number">6.</span> <span class="nav-text">BitMap优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他优化"><span class="nav-number"></span> <span class="nav-text">其他优化</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#布局优化"><span class="nav-number">1.</span> <span class="nav-text">布局优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染问题"><span class="nav-number">1.1.</span> <span class="nav-text">渲染问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存优化"><span class="nav-number">2.</span> <span class="nav-text">内存优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动速度优化"><span class="nav-number">3.</span> <span class="nav-text">启动速度优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apk大小优化"><span class="nav-number">4.</span> <span class="nav-text">Apk大小优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#耗电优化"><span class="nav-number">5.</span> <span class="nav-text">耗电优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BitMap优化"><span class="nav-number">6.</span> <span class="nav-text">BitMap优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络优化"><span class="nav-number">7.</span> <span class="nav-text">网络优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他优化"><span class="nav-number"></span> <span class="nav-text">其他优化</span></a></div>
             
 
           </div>
