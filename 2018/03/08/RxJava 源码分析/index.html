@@ -86,12 +86,12 @@
 <meta property="og:url" content="http://yoursite.com/2018/03/08/RxJava 源码分析/index.html">
 <meta property="og:site_name" content="Write something">
 <meta property="og:description" content="基于 RxJava 2.1.2  给定下面的一段代码，从源码的角度分析 RxJava 的实现原理： 12345678910111213141516171819202122232425262728293031323334353637ObservableOnSubscribe&amp;lt;Integer&amp;gt; oos = new ObservableOnSubscribe&amp;lt;Integer&amp;gt;(">
-<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fq7s4tbhepj31by10o47c.jpg">
-<meta property="og:updated_time" content="2018-04-11T07:43:10.554Z">
+<meta property="og:image" content="https://blog0707.oss-cn-beijing.aliyuncs.com/uPic/20201225140240-d213AP.png">
+<meta property="og:updated_time" content="2020-12-25T06:06:32.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava 源码分析">
 <meta name="twitter:description" content="基于 RxJava 2.1.2  给定下面的一段代码，从源码的角度分析 RxJava 的实现原理： 12345678910111213141516171819202122232425262728293031323334353637ObservableOnSubscribe&amp;lt;Integer&amp;gt; oos = new ObservableOnSubscribe&amp;lt;Integer&amp;gt;(">
-<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fq7s4tbhepj31by10o47c.jpg">
+<meta name="twitter:image" content="https://blog0707.oss-cn-beijing.aliyuncs.com/uPic/20201225140240-d213AP.png">
 
 
 
@@ -508,7 +508,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Disposable <span class="title">schedule</span><span class="params">(Runnable run, <span class="keyword">long</span> delay, TimeUnit unit)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (run == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"run == null"</span>);</div><div class="line">    <span class="keyword">if</span> (unit == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"unit == null"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (disposed) &#123;</div><div class="line">        <span class="keyword">return</span> Disposables.disposed();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    run = RxJavaPlugins.onSchedule(run);</div><div class="line"></div><div class="line">    ScheduledRunnable scheduled = <span class="keyword">new</span> ScheduledRunnable(handler, run);</div><div class="line"></div><div class="line">    Message message = Message.obtain(handler, scheduled);</div><div class="line">    message.obj = <span class="keyword">this</span>; <span class="comment">// Used as token for batch disposal of this worker's runnables.</span></div><div class="line"></div><div class="line">    handler.sendMessageDelayed(message, Math.max(<span class="number">0L</span>, unit.toMillis(delay)));</div><div class="line"></div><div class="line">    <span class="comment">// Re-check disposed state for removing in case we were racing a call to dispose().</span></div><div class="line">    <span class="keyword">if</span> (disposed) &#123;</div><div class="line">        handler.removeCallbacks(scheduled);</div><div class="line">        <span class="keyword">return</span> Disposables.disposed();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> scheduled;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>post 了一个 msg，这样就完成了线程的切换。</p>
 <p>下面上一张图，有助于理解和记忆：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fq7s4tbhepj31by10o47c.jpg" alt=""></p>
+<p><img src="https://blog0707.oss-cn-beijing.aliyuncs.com/uPic/20201225140240-d213AP.png" alt=""></p>
 <p>图中箭头的方向为事件传播的方向，如果定义方法调用的方向为顺序，那么当调用<code>observable.subscribe(observer)</code>的时候，⚠️订阅<code>subscribe</code>顺序是从下游回溯到上游，然后上游产生事件并发送，事件再传输到下游。</p>
 <ul>
 <li>每次执行 observerOn 和 subscribeOn 的时候，内部都会创建一个新的 Observable 和 Observer对象。</li>
@@ -729,7 +729,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
