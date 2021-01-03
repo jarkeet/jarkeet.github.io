@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Annotation," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java Annotation Processor本文介绍了如何自定义Java注解处理器及涉及到的相关知识，看完本文可以很轻松看懂并理解各大开源框架的注解处理器的应用。 关于自定义Java注解请查看自定义注解。  本文转载自自定义Java注解处理器  基本实现实现一个自定义注解处理器需要有两个步骤，第一是实现Processor接口处理注解，第二是注册注解处理器。 实现Processor接口通过实现">
+<meta name="keywords" content="Annotation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Annotation Processor">
+<meta property="og:url" content="http://yoursite.com/2021/01/03/自定义Java注解处理器/index.html">
+<meta property="og:site_name" content="Write something">
+<meta property="og:description" content="Java Annotation Processor本文介绍了如何自定义Java注解处理器及涉及到的相关知识，看完本文可以很轻松看懂并理解各大开源框架的注解处理器的应用。 关于自定义Java注解请查看自定义注解。  本文转载自自定义Java注解处理器  基本实现实现一个自定义注解处理器需要有两个步骤，第一是实现Processor接口处理注解，第二是注册注解处理器。 实现Processor接口通过实现">
+<meta property="og:image" content="https://yuweiguocn.github.io/assets/img/teach/anno-1.png">
+<meta property="og:image" content="https://yuweiguocn.github.io/assets/img/teach/anno-2.png">
+<meta property="og:updated_time" content="2021-01-03T09:54:33.285Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Annotation Processor">
+<meta name="twitter:description" content="Java Annotation Processor本文介绍了如何自定义Java注解处理器及涉及到的相关知识，看完本文可以很轻松看懂并理解各大开源框架的注解处理器的应用。 关于自定义Java注解请查看自定义注解。  本文转载自自定义Java注解处理器  基本实现实现一个自定义注解处理器需要有两个步骤，第一是实现Processor接口处理注解，第二是注册注解处理器。 实现Processor接口通过实现">
+<meta name="twitter:image" content="https://yuweiguocn.github.io/assets/img/teach/anno-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'GB10AN7BSS',
+      apiKey: 'd96e100af839e1d1e7116c114785f5b9',
+      indexName: 'algolia_index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/03/自定义Java注解处理器/"/>
+
+
+
+
+
+  <title>Java Annotation Processor | Write something</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Write something</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/03/自定义Java注解处理器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jarkeet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Write something">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Annotation Processor</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-03T17:19:38+08:00">
+                2021-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-Annotation-Processor"><a href="#Java-Annotation-Processor" class="headerlink" title="Java Annotation Processor"></a>Java Annotation Processor</h1><p>本文介绍了如何自定义Java注解处理器及涉及到的相关知识，看完本文可以很轻松看懂并理解各大开源框架的注解处理器的应用。</p>
+<p>关于自定义Java注解请查看<a href="https://yuweiguocn.github.io/java-annotation/" target="_blank" rel="external">自定义注解</a>。</p>
+<blockquote>
+<p>本文转载自<a href="https://yuweiguocn.github.io/java-annotation-processor/" target="_blank" rel="external">自定义Java注解处理器</a></p>
+</blockquote>
+<h2 id="基本实现"><a href="#基本实现" class="headerlink" title="基本实现"></a>基本实现</h2><p>实现一个自定义注解处理器需要有两个步骤，第一是实现Processor接口处理注解，第二是注册注解处理器。</p>
+<h3 id="实现Processor接口"><a href="#实现Processor接口" class="headerlink" title="实现Processor接口"></a>实现Processor接口</h3><p>通过实现Processor接口可以自定义注解处理器，这里我们采用更简单的方法通过继承AbstractProcessor类实现自定义注解处理器。实现抽象方法process处理我们想要的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnvironment)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>除此之外，我们还需要指定支持的注解类型以及支持的Java版本通过重写getSupportedAnnotationTypes方法和getSupportedSourceVersion方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnvironment)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</div><div class="line">        Set&lt;String&gt; annotataions = <span class="keyword">new</span> LinkedHashSet&lt;String&gt;();</div><div class="line">        annotataions.add(CustomAnnotation.class.getCanonicalName());</div><div class="line">        <span class="keyword">return</span> annotataions;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> SourceVersion.latestSupported();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于指定支持的注解类型，我们还可以通过注解的方式进行指定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SupportedAnnotationTypes</span>(&#123;<span class="string">"io.github.yuweiguocn.annotation.CustomAnnotation"</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnvironment)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> SourceVersion.latestSupported();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>因为Android平台可能会有兼容问题，建议使用重写getSupportedAnnotationTypes方法指定支持的注解类型。</p>
+</blockquote>
+<h3 id="注册注解处理器"><a href="#注册注解处理器" class="headerlink" title="注册注解处理器"></a>注册注解处理器</h3><p>最后我们还需要将我们自定义的注解处理器进行注册。新建res文件夹，目录下新建META-INF文件夹，目录下新建services文件夹，目录下新建javax.annotation.processing.Processor文件，然后将我们自定义注解处理器的全类名写到此文件：<br><img src="https://yuweiguocn.github.io/assets/img/teach/anno-1.png" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">io.github.yuweiguocn.processor.CustomProcessor</div></pre></td></tr></table></figure>
+<p>上面这种注册的方式太麻烦了，谷歌帮我们写了一个注解处理器来生成这个文件。<br>github地址：<a href="https://github.com/google/auto" target="_blank" rel="external">https://github.com/google/auto</a><br>添加依赖：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.google.auto.service:auto-service:1.0-rc2'</span></div></pre></td></tr></table></figure>
+<p>添加注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@AutoService</span>(Processor.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>搞定，体会到注解处理器的强大木有。后面我们只需关注注解处理器中的处理逻辑即可。</p>
+<p>我们来看一下最终的项目结构：</p>
+<p><img src="https://yuweiguocn.github.io/assets/img/teach/anno-2.png" alt="img"></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>抽象类中还有一个init方法，这是Processor接口中提供的一个方法，当我们编译程序时注解处理器工具会调用此方法并且提供实现ProcessingEnvironment接口的对象作为参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.init(processingEnvironment);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以使用ProcessingEnvironment获取一些实用类以及获取选项参数等：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elements getElementUtils()</td>
+<td>返回实现Elements接口的对象，用于操作元素的工具类。</td>
+</tr>
+<tr>
+<td>Filer getFiler()</td>
+<td>返回实现Filer接口的对象，用于创建文件、类和辅助文件。</td>
+</tr>
+<tr>
+<td>Messager getMessager()</td>
+<td>返回实现Messager接口的对象，用于报告错误信息、警告提醒。</td>
+</tr>
+<tr>
+<td>Map<string,string> getOptions()</string,string></td>
+<td>返回指定的参数选项。</td>
+</tr>
+<tr>
+<td>Types getTypeUtils()</td>
+<td>返回实现Types接口的对象，用于操作类型的工具类。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><p>Element元素是一个接口，表示一个程序元素，比如包、类或者方法。以下元素类型接口全部继承自Element接口：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ExecutableElement</td>
+<td>表示某个类或接口的方法、构造方法或初始化程序（静态或实例），包括注解类型元素。</td>
+</tr>
+<tr>
+<td>PackageElement</td>
+<td>表示一个包程序元素。提供对有关包及其成员的信息的访问。</td>
+</tr>
+<tr>
+<td>TypeElement</td>
+<td>表示一个类或接口程序元素。提供对有关类型及其成员的信息的访问。注意，枚举类型是一种类，而注解类型是一种接口。</td>
+</tr>
+<tr>
+<td>TypeParameterElement</td>
+<td>表示一般类、接口、方法或构造方法元素的形式类型参数。</td>
+</tr>
+<tr>
+<td>VariableElement</td>
+<td>表示一个字段、enum 常量、方法或构造方法参数、局部变量或异常参数。</td>
+</tr>
+</tbody>
+</table>
+<p>如果我们要判断一个元素的类型，应该使用Element.getKind()方法配合ElementKind枚举类进行判断。尽量<strong>避免使用instanceof进行判断</strong>，因为比如TypeElement既表示类又表示一个接口，这样判断的结果可能不是你想要的。例如我们判断一个元素是不是一个类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (element <span class="keyword">instanceof</span> TypeElement) &#123; <span class="comment">//错误，也有可能是一个接口</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (element.getKind() == ElementKind.CLASS) &#123; <span class="comment">//正确</span></div><div class="line">    <span class="comment">//doSomething</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下表为ElementKind枚举类中的部分常量，详细信息请查看官方文档。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PACKAGE</td>
+<td>一个包。</td>
+</tr>
+<tr>
+<td>ENUM</td>
+<td>一个枚举类型。</td>
+</tr>
+<tr>
+<td>CLASS</td>
+<td>没有用更特殊的种类（如 ENUM）描述的类。</td>
+</tr>
+<tr>
+<td>ANNOTATION_TYPE</td>
+<td>一个注解类型。</td>
+</tr>
+<tr>
+<td>INTERFACE</td>
+<td>没有用更特殊的种类（如 ANNOTATION_TYPE）描述的接口。</td>
+</tr>
+<tr>
+<td>ENUM_CONSTANT</td>
+<td>一个枚举常量。</td>
+</tr>
+<tr>
+<td>FIELD</td>
+<td>没有用更特殊的种类（如 ENUM_CONSTANT）描述的字段。</td>
+</tr>
+<tr>
+<td>PARAMETER</td>
+<td>方法或构造方法的参数。</td>
+</tr>
+<tr>
+<td>LOCAL_VARIABLE</td>
+<td>局部变量。</td>
+</tr>
+<tr>
+<td>METHOD</td>
+<td>一个方法。</td>
+</tr>
+<tr>
+<td>CONSTRUCTOR</td>
+<td>一个构造方法。</td>
+</tr>
+<tr>
+<td>TYPE_PARAMETER</td>
+<td>一个类型参数。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>TypeMirror是一个接口，表示 Java 编程语言中的类型。这些类型包括基本类型、声明类型（类和接口类型）、数组类型、类型变量和 null 类型。还可以表示通配符类型参数、executable 的签名和返回类型，以及对应于包和关键字 void 的伪类型。以下类型接口全部继承自TypeMirror接口：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ArrayType</td>
+<td>表示一个数组类型。多维数组类型被表示为组件类型也是数组类型的数组类型。</td>
+</tr>
+<tr>
+<td>DeclaredType</td>
+<td>表示某一声明类型，是一个类 (class) 类型或接口 (interface) 类型。这包括参数化的类型（比如 java.util.Set）和原始类型。TypeElement 表示一个类或接口元素，而 DeclaredType 表示一个类或接口类型，后者将成为前者的一种使用（或调用）。</td>
+</tr>
+<tr>
+<td>ErrorType</td>
+<td>表示无法正常建模的类或接口类型。</td>
+</tr>
+<tr>
+<td>ExecutableType</td>
+<td>表示 executable 的类型。executable 是一个方法、构造方法或初始化程序。</td>
+</tr>
+<tr>
+<td>NoType</td>
+<td>在实际类型不适合的地方使用的伪类型。</td>
+</tr>
+<tr>
+<td>NullType</td>
+<td>表示 null 类型。</td>
+</tr>
+<tr>
+<td>PrimitiveType</td>
+<td>表示一个基本类型。这些类型包括 boolean、byte、short、int、long、char、float 和 double。</td>
+</tr>
+<tr>
+<td>ReferenceType</td>
+<td>表示一个引用类型。这些类型包括类和接口类型、数组类型、类型变量和 null 类型。</td>
+</tr>
+<tr>
+<td>TypeVariable</td>
+<td>表示一个类型变量。</td>
+</tr>
+<tr>
+<td>WildcardType</td>
+<td>表示通配符类型参数。</td>
+</tr>
+</tbody>
+</table>
+<p>同样，如果我们想判断一个TypeMirror的类型，应该使用TypeMirror.getKind()方法配合TypeKind枚举类进行判断。尽量<strong>避免使用instanceof进行判断</strong>，因为比如DeclaredType既表示类 (class) 类型又表示接口 (interface) 类型，这样判断的结果可能不是你想要的。</p>
+<p>TypeKind枚举类中的部分常量，详细信息请查看官方文档。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOLEAN</td>
+<td>基本类型 boolean。</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>基本类型 int。</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>基本类型 long。</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>基本类型 float。</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>基本类型 double。</td>
+</tr>
+<tr>
+<td>VOID</td>
+<td>对应于关键字 void 的伪类型。</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>null 类型。</td>
+</tr>
+<tr>
+<td>ARRAY</td>
+<td>数组类型。</td>
+</tr>
+<tr>
+<td>PACKAGE</td>
+<td>对应于包元素的伪类型。</td>
+</tr>
+<tr>
+<td>EXECUTABLE</td>
+<td>方法、构造方法或初始化程序。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p>Filer接口支持通过注解处理器创建新文件。可以创建三种文件类型：源文件、类文件和辅助资源文件。</p>
+<p>1.创建源文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">JavaFileObject <span class="title">createSourceFile</span><span class="params">(CharSequence name,</span></span></div><div class="line">                                Element... originatingElements)</div><div class="line">                                <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+<p>创建一个新的源文件，并返回一个对象以允许写入它。文件的名称和路径（相对于源文件的根目录输出位置）基于该文件中声明的类型。如果声明的类型不止一个，则应该使用主要顶层类型的名称（例如，声明为 public 的那个）。还可以创建源文件来保存有关某个包的信息，包括包注解。要为指定包创建源文件，可以用 name 作为包名称，后跟 “.package-info”；要为未指定的包创建源文件，可以使用 “package-info”。</p>
+<p>2.创建类文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">JavaFileObject <span class="title">createClassFile</span><span class="params">(CharSequence name,</span></span></div><div class="line">                               Element... originatingElements)</div><div class="line">                               <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+<p>创建一个新的类文件，并返回一个对象以允许写入它。文件的名称和路径（相对于类文件的根目录输出位置）基于将写入的类型名称。还可以创建类文件来保存有关某个包的信息，包括包注解。要为指定包创建类文件，可以用 name 作为包名称，后跟 “.package-info”；为未指定的包创建类文件不受支持。</p>
+<p>3.创建辅助资源文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">FileObject <span class="title">createResource</span><span class="params">(JavaFileManager.Location location,</span></span></div><div class="line">                          CharSequence pkg,</div><div class="line">                          CharSequence relativeName,</div><div class="line">                          Element... originatingElements)</div><div class="line">                          <span class="keyword">throws</span> IOException</div></pre></td></tr></table></figure>
+<p>创建一个用于写入操作的新辅助资源文件，并为它返回一个文件对象。该文件可以与新创建的源文件、新创建的二进制文件或者其他受支持的位置一起被查找。位置 CLASS_OUTPUT 和 SOURCE_OUTPUT 必须受支持。资源可以是相对于某个包（该包是源文件和类文件）指定的，并通过相对路径名从中取出。从不太严格的角度说，新文件的完全路径名将是 location、 pkg 和 relativeName 的串联。</p>
+<p>对于生成Java文件，还可以使用Square公司的开源类库<a href="https://github.com/square/javapoet" target="_blank" rel="external">JavaPoet</a>，感兴趣的同学可以了解下。</p>
+<h3 id="打印错误信息"><a href="#打印错误信息" class="headerlink" title="打印错误信息"></a>打印错误信息</h3><p>Messager接口提供注解处理器用来报告错误消息、警告和其他通知的方式。</p>
+<blockquote>
+<p>注意：我们应该<strong>对在处理过程中可能发生的异常进行捕获</strong>，通过Messager接口提供的方法通知用户。此外，使用带有Element参数的方法连接到出错的元素，用户可以直接点击错误信息跳到出错源文件的相应行。如果你在process()中抛出一个异常，那么运行注解处理器的JVM将会崩溃（就像其他Java应用一样），这样用户会从javac中得到一个非常难懂出错信息。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void printMessage(Diagnostic.Kind kind, CharSequence msg)</td>
+<td>打印指定种类的消息。</td>
+</tr>
+<tr>
+<td>void printMessage(Diagnostic.Kind kind, CharSequence msg, Element e)</td>
+<td>在元素的位置上打印指定种类的消息。</td>
+</tr>
+<tr>
+<td>void printMessage(Diagnostic.Kind kind, CharSequence msg, Element e, AnnotationMirror a)</td>
+<td>在已注解元素的注解镜像位置上打印指定种类的消息。</td>
+</tr>
+<tr>
+<td>void printMessage(Diagnostic.Kind kind, CharSequence msg, Element e, AnnotationMirror a, AnnotationValue v)</td>
+<td>在已注解元素的注解镜像内部注解值的位置上打印指定种类的消息。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置选项参数"><a href="#配置选项参数" class="headerlink" title="配置选项参数"></a>配置选项参数</h3><p>我们可以通过getOptions()方法获取选项参数，在gradle文件中配置选项参数值。例如我们配置了一个名为yuweiguoCustomAnnotation的参数值。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    defaultConfig &#123;</div><div class="line">        javaCompileOptions &#123;</div><div class="line">            annotationProcessorOptions &#123;</div><div class="line">                arguments = [ <span class="string">yuweiguoCustomAnnotation :</span> <span class="string">'io.github.yuweiguocn.customannotation.MyCustomAnnotation'</span> ]</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在注解处理器中重写getSupportedOptions方法指定支持的选项参数名称。通过getOptions方法获取选项参数值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CUSTOM_ANNOTATION = <span class="string">"yuweiguoCustomAnnotation"</span>;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnv)</span> </span>&#123;</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">       String resultPath = processingEnv.getOptions().get(CUSTOM_ANNOTATION);</div><div class="line">       <span class="keyword">if</span> (resultPath == <span class="keyword">null</span>) &#123;</div><div class="line">           ...</div><div class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       &#125;</div><div class="line">       ...</div><div class="line">   &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">       ...</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedOptions</span><span class="params">()</span> </span>&#123;</div><div class="line">   Set&lt;String&gt; options = <span class="keyword">new</span> LinkedHashSet&lt;String&gt;();</div><div class="line">   options.add(CUSTOM_ANNOTATION);</div><div class="line">   <span class="keyword">return</span> options;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h3><p>Java官方文档给出的注解处理过程的定义：注解处理过程是一个有序的循环过程。在每次循环中，一个处理器可能被要求去处理那些在上一次循环中产生的源文件和类文件中的注解。第一次循环的输入是运行此工具的初始输入。这些初始输入，可以看成是虚拟的第0次的循环的输出。这也就是说我们实现的process方法有可能会被调用多次，因为我们生成的文件也有可能会包含相应的注解。例如，我们的源文件为SourceActivity.class，生成的文件为Generated.class，这样就会有三次循环，第一次输入为SourceActivity.class，输出为Generated.class；第二次输入为Generated.class，输出并没有产生新文件；第三次输入为空，输出为空。</p>
+<p>每次循环都会调用process方法，process方法提供了两个参数，第一个是我们请求处理注解类型的集合（也就是我们通过重写getSupportedAnnotationTypes方法所指定的注解类型），第二个是有关当前和上一次 循环的信息的环境。返回值表示这些注解是否由此 Processor 声明，如果返回 true，则这些注解已声明并且不要求后续 Processor 处理它们；如果返回 false，则这些注解未声明并且可能要求后续 Processor 处理它们。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public abstract boolean process(Set&lt;? extends TypeElement&gt; annotations,</div><div class="line">                                RoundEnvironment roundEnv)</div></pre></td></tr></table></figure>
+<h3 id="获取注解元素"><a href="#获取注解元素" class="headerlink" title="获取注解元素"></a>获取注解元素</h3><p>我们可以通过RoundEnvironment接口获取注解元素。process方法会提供一个实现RoundEnvironment接口的对象。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Set&lt;? extends Element&gt; getElementsAnnotatedWith(Class&lt;? extends Annotation&gt; a)</td>
+<td>返回被指定注解类型注解的元素集合。</td>
+</tr>
+<tr>
+<td>Set&lt;? extends Element&gt; getElementsAnnotatedWith(TypeElement a)</td>
+<td>返回被指定注解类型注解的元素集合。</td>
+</tr>
+<tr>
+<td>processingOver()</td>
+<td>如果循环处理完成返回true，否则返回false。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>了解完了相关的基本概念，接下来我们来看一个示例，<strong>本示例只为演示无实际意义</strong>。主要功能为自定义一个注解，此注解只能用在public的方法上，我们通过注解处理器拿到类名和方法名存储到List集合中，然后生成通过参数选项指定的文件，通过此文件可以获取List集合。</p>
+<p>自定义注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD&#125;)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注解处理器中关键代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annotations, RoundEnvironment roundEnv)</span> </span>&#123;</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">       String resultPath = processingEnv.getOptions().get(CUSTOM_ANNOTATION);</div><div class="line">       <span class="keyword">if</span> (resultPath == <span class="keyword">null</span>) &#123;</div><div class="line">           messager.printMessage(Diagnostic.Kind.ERROR, <span class="string">"No option "</span> + CUSTOM_ANNOTATION +</div><div class="line">                   <span class="string">" passed to annotation processor"</span>);</div><div class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       round++;</div><div class="line">       messager.printMessage(Diagnostic.Kind.NOTE, <span class="string">"round "</span> + round + <span class="string">" process over "</span> + roundEnv.processingOver());</div><div class="line">       Iterator&lt;? extends TypeElement&gt; iterator = annotations.iterator();</div><div class="line">       <span class="keyword">while</span> (iterator.hasNext()) &#123;</div><div class="line">           messager.printMessage(Diagnostic.Kind.NOTE, <span class="string">"name is "</span> + iterator.next().getSimpleName().toString());</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (roundEnv.processingOver()) &#123;</div><div class="line">           <span class="keyword">if</span> (!annotations.isEmpty()) &#123;</div><div class="line">               messager.printMessage(Diagnostic.Kind.ERROR,</div><div class="line">                       <span class="string">"Unexpected processing state: annotations still available after processing over"</span>);</div><div class="line">               <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (annotations.isEmpty()) &#123;</div><div class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="keyword">for</span> (Element element : roundEnv.getElementsAnnotatedWith(CustomAnnotation.class)) &#123;</div><div class="line">           <span class="keyword">if</span> (element.getKind() != ElementKind.METHOD) &#123;</div><div class="line">               messager.printMessage(</div><div class="line">                       Diagnostic.Kind.ERROR,</div><div class="line">                       String.format(<span class="string">"Only methods can be annotated with @%s"</span>, CustomAnnotation.class.getSimpleName()),</div><div class="line">                       element);</div><div class="line">               <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">// 退出处理</span></div><div class="line">           &#125;</div><div class="line"></div><div class="line">           <span class="keyword">if</span> (!element.getModifiers().contains(Modifier.PUBLIC)) &#123;</div><div class="line">               messager.printMessage(Diagnostic.Kind.ERROR, <span class="string">"Subscriber method must be public"</span>, element);</div><div class="line">               <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           ExecutableElement execElement = (ExecutableElement) element;</div><div class="line">           TypeElement classElement = (TypeElement) execElement.getEnclosingElement();</div><div class="line">           result.add(classElement.getSimpleName().toString() + <span class="string">"#"</span> + execElement.getSimpleName().toString());</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">if</span> (!result.isEmpty()) &#123;</div><div class="line">           generateFile(resultPath);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           messager.printMessage(Diagnostic.Kind.WARNING, <span class="string">"No @CustomAnnotation annotations found"</span>);</div><div class="line">       &#125;</div><div class="line">       result.clear();</div><div class="line">   &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">       messager.printMessage(Diagnostic.Kind.ERROR, <span class="string">"Unexpected error in CustomProcessor: "</span> + e);</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">generateFile</span><span class="params">(String path)</span> </span>&#123;</div><div class="line">   BufferedWriter writer = <span class="keyword">null</span>;</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">       JavaFileObject sourceFile = filer.createSourceFile(path);</div><div class="line">       <span class="keyword">int</span> period = path.lastIndexOf(<span class="string">'.'</span>);</div><div class="line">       String myPackage = period &gt; <span class="number">0</span> ? path.substring(<span class="number">0</span>, period) : <span class="keyword">null</span>;</div><div class="line">       String clazz = path.substring(period + <span class="number">1</span>);</div><div class="line">       writer = <span class="keyword">new</span> BufferedWriter(sourceFile.openWriter());</div><div class="line">       <span class="keyword">if</span> (myPackage != <span class="keyword">null</span>) &#123;</div><div class="line">           writer.write(<span class="string">"package "</span> + myPackage + <span class="string">";\n\n"</span>);</div><div class="line">       &#125;</div><div class="line">       writer.write(<span class="string">"import java.util.ArrayList;\n"</span>);</div><div class="line">       writer.write(<span class="string">"import java.util.List;\n\n"</span>);</div><div class="line">       writer.write(<span class="string">"/** This class is generated by CustomProcessor, do not edit. */\n"</span>);</div><div class="line">       writer.write(<span class="string">"public class "</span> + clazz + <span class="string">" &#123;\n"</span>);</div><div class="line">       writer.write(<span class="string">"    private static final List&lt;String&gt; ANNOTATIONS;\n\n"</span>);</div><div class="line">       writer.write(<span class="string">"    static &#123;\n"</span>);</div><div class="line">       writer.write(<span class="string">"        ANNOTATIONS = new ArrayList&lt;&gt;();\n\n"</span>);</div><div class="line">       writeMethodLines(writer);</div><div class="line">       writer.write(<span class="string">"    &#125;\n\n"</span>);</div><div class="line">       writer.write(<span class="string">"    public static List&lt;String&gt; getAnnotations() &#123;\n"</span>);</div><div class="line">       writer.write(<span class="string">"        return ANNOTATIONS;\n"</span>);</div><div class="line">       writer.write(<span class="string">"    &#125;\n\n"</span>);</div><div class="line">       writer.write(<span class="string">"&#125;\n"</span>);</div><div class="line">   &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Could not write source for "</span> + path, e);</div><div class="line">   &#125; <span class="keyword">finally</span> &#123;</div><div class="line">       <span class="keyword">if</span> (writer != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               writer.close();</div><div class="line">           &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">               <span class="comment">//Silent</span></div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">writeMethodLines</span><span class="params">(BufferedWriter writer)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; result.size(); i++) &#123;</div><div class="line">       writer.write(<span class="string">"        ANNOTATIONS.add(\""</span> + result.get(i) + <span class="string">"\");\n"</span>);</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Note: round <span class="number">1</span> process over <span class="keyword">false</span></div><div class="line">Note: name is CustomAnnotation</div><div class="line">Note: round <span class="number">2</span> process over <span class="keyword">false</span></div><div class="line">Note: round <span class="number">3</span> process over <span class="keyword">true</span></div></pre></td></tr></table></figure>
+<p>获取完整代码：<a href="https://github.com/yuweiguocn/CustomAnnotation" target="_blank" rel="external">https://github.com/yuweiguocn/CustomAnnotation</a></p>
+<p>关于上传自定义注解处理器到jcenter中，请查看<a href="https://yuweiguocn.github.io/publishing-lib-to-jcenter/" target="_blank" rel="external">上传类库到jcenter</a>。</p>
+<p>很高兴你能阅读到这里，此时再去看EventBus 3.0中的注解处理器的源码，相信你可以很轻松地理解它的原理。</p>
+<blockquote>
+<p>注意：如果你clone了工程代码，你可能会发现<strong>注解和注解处理器是单独的module</strong>。有一点可以肯定的是我们的注解处理器只需要在编译的时候使用，并不需要打包到APK中。因此为了用户考虑，我们需要将注解处理器分离为单独的module。</p>
+</blockquote>
+<h2 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h2><ul>
+<li><a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">https://github.com/greenrobot/EventBus</a> Android optimized event bus that simplifies communication between Activities, Fragments, Threads, Services, etc. Less code, better quality.</li>
+<li><a href="https://github.com/frankiesardo/icepick" target="_blank" rel="external">https://github.com/frankiesardo/icepick</a> Android Instance State made easy</li>
+<li><a href="https://github.com/sockeqwe/fragmentargs" target="_blank" rel="external">https://github.com/sockeqwe/fragmentargs</a> Annotation Processor for setting arguments in android fragments</li>
+<li><a href="http://parceler.org/" target="_blank" rel="external">http://parceler.org/</a> Android Parcelable code generator for Google Android</li>
+<li><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">https://github.com/JakeWharton/butterknife</a> Bind Android views and callbacks to fields and methods.</li>
+<li><a href="https://github.com/bluelinelabs/LoganSquare" target="_blank" rel="external">https://github.com/bluelinelabs/LoganSquare</a> Screaming fast JSON parsing and serialization library for Android.</li>
+<li><a href="https://github.com/google/auto" target="_blank" rel="external">https://github.com/google/auto</a> A collection of source code generators for Java.</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.race604.com/annotation-processing/" target="_blank" rel="external">https://www.race604.com/annotation-processing/</a></li>
+<li><a href="http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/package-summary.html" target="_blank" rel="external">http://docs.oracle.com/javase/7/docs/api/javax/annotation/processing/package-summary.html</a></li>
+<li><a href="http://tool.oschina.net/uploads/apidocs/jdk-zh/" target="_blank" rel="external">http://tool.oschina.net/uploads/apidocs/jdk-zh/</a></li>
+<li><a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">https://github.com/greenrobot/EventBus</a></li>
+<li><a href="http://hannesdorfmann.com/annotation-processing/annotationprocessing101" target="_blank" rel="external">http://hannesdorfmann.com/annotation-processing/annotationprocessing101</a></li>
+<li><a href="https://github.com/sockeqwe/annotationprocessing101" target="_blank" rel="external">https://github.com/sockeqwe/annotationprocessing101</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Annotation/" rel="tag"># Annotation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/03/EventBus源码分析/" rel="next" title="EventBus 源码详解">
+                <i class="fa fa-chevron-left"></i> EventBus 源码详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="jarkeet" />
+            
+              <p class="site-author-name" itemprop="name">jarkeet</p>
+              <p class="site-description motion-element" itemprop="description">闲来无事写写字</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/jarkeet" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Annotation-Processor"><span class="nav-number">1.</span> <span class="nav-text">Java Annotation Processor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现"><span class="nav-number">1.1.</span> <span class="nav-text">基本实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现Processor接口"><span class="nav-number">1.1.1.</span> <span class="nav-text">实现Processor接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册注解处理器"><span class="nav-number">1.1.2.</span> <span class="nav-text">注册注解处理器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元素"><span class="nav-number">1.2.1.</span> <span class="nav-text">元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">1.2.2.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建文件"><span class="nav-number">1.2.3.</span> <span class="nav-text">创建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打印错误信息"><span class="nav-number">1.2.4.</span> <span class="nav-text">打印错误信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置选项参数"><span class="nav-number">1.2.5.</span> <span class="nav-text">配置选项参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理过程"><span class="nav-number">1.2.6.</span> <span class="nav-text">处理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取注解元素"><span class="nav-number">1.2.7.</span> <span class="nav-text">获取注解元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用案例"><span class="nav-number">1.4.</span> <span class="nav-text">应用案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jarkeet</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
