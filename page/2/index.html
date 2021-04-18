@@ -392,7 +392,7 @@
 <p><strong>那么如何加载一个图片?</strong>首先<code>BitmapFactory</code>类提供了四种方法: <code>decodeFile()</code>, <code>decodeResource()</code>, <code>decodeStream()</code>, <code>decodeByteArray()</code>. 分别用于从文件系统, 资源文件, 输入流以及字节数组加载出一个<code>Bitmap</code>对象. 其中<code>decodeFile</code>和<code>decodeResource</code>又间接调用了<code>decodeStream()</code>方法, 这四类方法最终是在Android的底层实现的, 对应着<code>BitmapFactory</code>类的几个native方法.</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/21/Bitmap的加载和Cache/#more" rel="contents">
+            <a class="btn" href="/2018/03/21/Bitmap的加载和Cache/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -541,7 +541,7 @@
 <p>Runnable的代码非常简单，它是一个接口且只有一个run()，创建一个类实现它，把一些费时操作写在其中，然后使用某个线程去执行该Runnable实现类即可实现多线程。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/19/Callable和FutureTask/#more" rel="contents">
+            <a class="btn" href="/2018/03/19/Callable和FutureTask/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -697,7 +697,7 @@
 <li><p><code>IntentService</code>: 是一个服务, 系统对其进行了封装使其可以更方便地执行后台任务, IntentService内部采用了<code>HandlerThread</code>来执行任务, 当任务执行完毕后<code>IntentService</code>会自动退出. 从执行任务的角度来看, 更像一个后台的线程. 但是因为其本身是一种服务, 所以导致不容易被系统杀死从而保证任务的执行. 而如果是一个后台线程, 由于这个时候进行中没有活动的四大组件, 那么这个进程的优先级会很低, 很容易被系统杀死, 这就是<code>IntentService</code>的优点.</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/15/Android的线程和线程池/#more" rel="contents">
+            <a class="btn" href="/2018/03/15/Android的线程和线程池/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -850,7 +850,7 @@
 <p>接下来，从源码来说说每个过程。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/14/Activity启动分析/#more" rel="contents">
+            <a class="btn" href="/2018/03/14/Activity启动分析/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -996,7 +996,7 @@
           <p>Android的消息机制主要指<code>Handler</code>的运行机制, <code>Handler</code>的运行需要底层的<code>MessageQueue</code>和<code>Loopper</code>的支撑. <strong>MessageQueue消息机制</strong>, 内部存储了一组消息, 以队列的形式对外提供插入和删除工作. 虽然叫消息队列,但是其内部存储结构并不是真正的队列,而是采用单链表的数据结构来存储消息列表. <strong>Looper消息循环</strong>, 因为<code>MessageQueue</code>本质只是一个消息的存储单元, 它不能去处理消息, 而<code>Looper</code>就是为实现处理而产生的. <code>Looper</code>会以无限循环的形式去查找是否有新消息, 如果有的话就处理消息, 否在就一直等待.</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/Android的消息机制/#more" rel="contents">
+            <a class="btn" href="/2018/03/13/Android的消息机制/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1154,7 +1154,7 @@
 <p>​
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/09/艺术探索读书笔记/#more" rel="contents">
+            <a class="btn" href="/2018/03/09/艺术探索读书笔记/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1308,7 +1308,7 @@
 <p><code>Service</code>可以停止, 需要灵活采用<code>stopService</code>和<code>unBindService</code></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/09/四大组件的工作过程/#more" rel="contents">
+            <a class="btn" href="/2018/03/09/四大组件的工作过程/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1460,7 +1460,7 @@
 <p>上面的代码首先创建了一个主题对象，然后又创建了一个观察者对象，最后将两者关联起来，并且最重要的一点，指定了主题对象和观察者对象执行的线程。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/08/RxJava 源码分析/#more" rel="contents">
+            <a class="btn" href="/2018/03/08/RxJava 源码分析/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1609,7 +1609,7 @@
 <p>​
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/06/理解Window和WindowManager/#more" rel="contents">
+            <a class="btn" href="/2018/03/06/理解Window和WindowManager/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1793,7 +1793,7 @@
 </table>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/05/Android动画深入分析/#more" rel="contents">
+            <a class="btn" href="/2018/03/05/Android动画深入分析/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1896,7 +1896,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1907,7 +1907,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
